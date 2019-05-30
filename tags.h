@@ -1,0 +1,10 @@
+struct tag *criar_tag(char *nome);
+void set_tag_nome(struct tag *tag_atual,char *nome);
+void set_tag_chamadas(struct tag *tag_atual,int chamadas);
+void set_tag_next(struct tag *tag_atual,struct tag *next);
+char *get_tag_nome(struct tag  *tag_atual);
+int get_tag_chamadas(struct tag *tag_atual);
+void inserir_tag(struct tag *tag_nova);
+void insere_tag_cliente(struct cliente *cliente_atual, struct tag *tag_atual);
+void listar_tags();
+void listar_tags_cliente(struct cliente *cliente_atual);
