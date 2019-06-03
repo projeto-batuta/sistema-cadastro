@@ -1,0 +1,1 @@
+struct data data_base();
