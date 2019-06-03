@@ -29,7 +29,6 @@ struct cliente *criar_cliente(char *nome)
 	}
 	return novo_cliente;
 }
-
 void set_cliente_next(struct cliente *cliente_atual,struct cliente *next)
 {
 	cliente_atual -> next = next;
@@ -38,6 +37,23 @@ void set_cliente_next(struct cliente *cliente_atual,struct cliente *next)
 void set_cliente_prev(struct cliente *cliente_atual,struct cliente *prev)
 {
 	cliente_atual -> prev = prev;
+}
+
+void set_cliente_data_n(struct cliente *cliente_atual,int ano,int mes,int dia)
+{
+	cliente_atual -> data_n.ano = ano;
+	cliente_atual -> data_n.mes = mes;
+	cliente_atual -> data_n.dia = dia;
+}
+
+void set_cliente_genero(struct cliente *cliente_atual,char genero)
+{
+	cliente_atual -> genero = genero;
+}
+
+void set_cliente_cpf(struct cliente *cliente_atual,char *cpf)
+{
+	cliente_atual -> cpf = cpf;
 }
 
 char *get_cliente_nome(struct cliente *cliente_atual)
@@ -80,9 +96,8 @@ void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo)
 		pont_cidade -> clientes = cliente_novo;
 		cliente_novo -> prev = NULL;
 	}
-	// clientes_cont++;
+	cidade_base ->count_clientes++;
 }
-
 void listar_clientes(struct cidade *cidade_atual)
 {
 	struct cliente *pont_temp = cidade_atual -> clientes;
@@ -91,4 +106,25 @@ void listar_clientes(struct cidade *cidade_atual)
 		printf("- Nome: %s\n  CPF: %s\n\n",get_cliente_nome(pont_temp),get_cliente_cpf(pont_temp));
 		pont_temp = pont_temp -> next;
 	}
+}
+
+struct cliente *buscar_cliente(struct cidade *main,char *cpf)
+{
+	struct cliente *result = NULL;
+	struct cidade *pont_temp_cid = main;
+	struct cliente *pont_temp_cli;
+	while (pont_temp_cid != NULL){
+		pont_temp_cli = pont_temp_cid -> clientes;
+		while(pont_temp_cli != NULL)
+		{
+			if(get_cliente_cpf(pont_temp_cli) == cpf){
+				result = pont_temp_cli;
+			}
+			pont_temp_cli = pont_temp_cli -> next;
+		}
+		pont_temp_cid = pont_temp_cid -> next;
+	}
+
+	return result;
+	
 }

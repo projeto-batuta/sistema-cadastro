@@ -16,6 +16,9 @@ struct cidade *criar_cidade(char *nome)
 {
 	struct cidade *nova_cidade = (struct cidade*)
 		malloc(sizeof(struct cidade));
+	nova_cidade -> count_cidades = 0;
+	nova_cidade -> count_clientes = 0;
+	nova_cidade -> count_roteiros = 0;
 	nova_cidade -> nome = nome;
 	nova_cidade -> clientes = NULL;
 	nova_cidade -> last_cliente = NULL;
@@ -56,7 +59,7 @@ void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova)
 			pont_temp = pont_temp -> next;
 		pont_temp -> next = cidade_nova;
 	}
-	// cidades_cont++;
+	cidade_base -> count_cidades++;
 }
 
 void listar_cidades(struct cidade *cidades)
@@ -68,4 +71,34 @@ void listar_cidades(struct cidade *cidades)
 		printf("- %s\n",get_cidade_nome(tmp));
 		tmp = tmp -> next;
 	}
+}
+
+void listar_cidades_cadastro(struct cidade *cidades)
+{	
+	struct cidade *tmp = cidades;
+	printf("\nCidades cadastradas:\n");
+	int cont = 0;
+	while(tmp != NULL)
+	{
+		printf("[%d] - %s\n",cont,get_cidade_nome(tmp));
+		tmp = tmp -> next;
+		cont++;
+	}
+}
+
+struct cidade *buscar_cidade_index(struct cidade *main,int i)
+{
+	struct cidade *result = NULL;
+	struct cidade *pont_temp = main;
+	int cont = 0;
+	while(pont_temp != NULL)
+	{
+		if(cont == i)
+		{
+			result = pont_temp;
+		}
+		pont_temp = pont_temp -> next;
+		cont++;
+	}
+	return result;
 }

@@ -8,7 +8,6 @@
 #define FALSE 0
 #define NONE 0 //Apenas para o uso de char
 
-
 /*Structs*/
 
 struct data 
@@ -53,6 +52,7 @@ struct roteiro
 	char *nome;
 	char *info;
 	struct data duracao;
+	int count_passeios;
 	struct passeio *passeios;
 	struct roteiro *next;
 	struct passeio *last_passeio;
@@ -61,9 +61,12 @@ struct roteiro
 struct cidade
 {
 	char *nome;
+	int count_clientes;
 	struct cliente *clientes;
 	struct cliente *last_cliente;
+	int count_roteiros;
 	struct roteiro *roteiros;
+	int count_cidades;
 	struct cidade *next;
 };
 

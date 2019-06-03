@@ -71,5 +71,5 @@ void inserir_roteiro(struct cidade *cidade_base, struct roteiro *roteiro_novo)
 	else {
 		cidade_base -> roteiros = roteiro_novo;
 	}
-	// roteiros_cont++;
+	cidade_base -> count_roteiros++;
 }

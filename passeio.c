@@ -102,9 +102,10 @@ void inserir_passeio(struct roteiro *roteiro_base,struct passeio *passeio_novo)
 		pont_roteiro -> passeios = passeio_novo;
 	}
 	pont_roteiro -> last_passeio = passeio_novo;
-	// passeio_novo -> id = passeios_cont;
-	// passeios_cont++;	
+	passeio_novo -> id = roteiro_base -> count_passeios;
+	roteiro_base -> count_passeios++;	
 }
+
 
 void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *cliente_atual)
 {

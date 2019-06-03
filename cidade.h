@@ -6,3 +6,5 @@ void set_cidade_last_cliente(struct cidade *cidade_atual, struct cliente *last);
 char *get_cidade_nome(struct cidade *cidade_atual);
 void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova);
 void listar_cidades(struct cidade *cidades);
+void listar_cidades_cadastro(struct cidade *cidades);
+struct cidade *buscar_cidade_index(struct cidade *main,int i);
