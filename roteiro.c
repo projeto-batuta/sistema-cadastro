@@ -73,3 +73,20 @@ void inserir_roteiro(struct cidade *cidade_base, struct roteiro *roteiro_novo)
 	}
 	cidade_base -> count_roteiros++;
 }
+
+void limpar_roteiros(struct cidade *cidade_base)
+{
+	struct roteiro *roteiro_temp = cidade_base -> roteiros;
+	struct roteiro *roteiro_next;
+	if(roteiro_temp != NULL)
+	{
+		roteiro_next = roteiro_temp -> next;
+		while (roteiro_temp != NULL)
+		{
+			if(roteiro_temp == cidade_base -> roteiros) cidade_base -> roteiros = NULL;
+			limpar_passeios(roteiro_temp);
+			free(roteiro_temp);
+			roteiro_temp = roteiro_next;
+		}
+	}
+}

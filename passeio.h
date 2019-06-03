@@ -11,3 +11,4 @@ struct data get_passeio_agenda(struct passeio *passeio_atual);
 int get_passeio_estado(struct passeio *passeio_atual);
 void inserir_passeio(struct roteiro *roteiro_base,struct passeio *passeio_novo);
 void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *cliente_atual);
+void limpar_passeios(struct roteiro *roteiro_base);

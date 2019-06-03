@@ -102,3 +102,21 @@ struct cidade *buscar_cidade_index(struct cidade *main,int i)
 	}
 	return result;
 }
+
+void limpar_cidades(struct cidade *cidade_root)
+{
+	struct cidade *cidade_temp = cidade_root;
+	struct cidade *cidade_next;
+	if(cidade_temp != NULL)
+	{
+		cidade_next = cidade_temp -> next;
+		while (cidade_temp != NULL)
+		{
+			if(cidade_temp == cidade_root -> next) cidade_root -> next = NULL;
+			limpar_clientes(cidade_temp);
+			limpar_roteiros(cidade_temp);
+			free(cidade_temp);
+			cidade_temp = cidade_next;
+		}
+	}
+}

@@ -51,6 +51,7 @@ void set_cliente_genero(struct cliente *cliente_atual,char genero)
 	cliente_atual -> genero = genero;
 }
 
+
 void set_cliente_cpf(struct cliente *cliente_atual,char *cpf)
 {
 	cliente_atual -> cpf = cpf;
@@ -128,3 +129,20 @@ struct cliente *buscar_cliente(struct cidade *main,char *cpf)
 	return result;
 	
 }
+
+void limpar_clientes(struct cidade *cidade_base)
+{
+	struct cliente *cliente_temp = cidade_base -> clientes;
+	struct cliente *cliente_next;
+	if(cliente_temp!= NULL)
+	{
+		cliente_next = cliente_temp -> next;
+		while(cliente_temp != NULL)
+		{
+			if(cliente_temp -> prev == NULL) cidade_base -> clientes = NULL;
+			free(cliente_temp);
+			cliente_temp = cliente_next;
+		}
+	}
+}
+

@@ -118,3 +118,19 @@ void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *clien
 			break;
 	}
 }
+
+void limpar_passeios(struct roteiro *roteiro_base)
+{
+	struct passeio *passeio_temp = roteiro_base -> passeios;
+	struct passeio *passeio_next;
+	if(passeio_temp != NULL)
+	{
+		passeio_next = passeio_temp -> next;
+		while (passeio_temp != NULL)
+		{
+			if(passeio_temp -> prev == NULL) roteiro_base -> passeios = NULL;
+			free(passeio_temp);
+			passeio_temp = passeio_next;
+		}
+	}
+}

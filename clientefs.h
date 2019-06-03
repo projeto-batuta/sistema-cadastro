@@ -12,3 +12,4 @@ struct tag **get_cliente_tags(struct cliente *cliente_atual);
 void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo);
 void listar_clientes(struct cidade *cidade_atual);
 struct cliente *buscar_cliente(struct cidade *main,char *cpf);
+void limpar_clientes(struct cidade *cidade_base);
