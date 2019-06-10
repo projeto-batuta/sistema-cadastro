@@ -8,7 +8,7 @@ char *get_cliente_nome(struct cliente *cliente_atual);
 char *get_cliente_cpf(struct cliente *cliente_atual);
 char get_cliente_genero(struct cliente *cliente_atual);
 struct data get_cliente_data_n(struct cliente *cliente_atual);
-struct tag **get_cliente_tags(struct cliente *cliente_atual);
+int *get_cliente_tags(struct cliente *cliente_atual);
 void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo);
 void listar_clientes(struct cidade *cidade_atual);
 struct cliente *buscar_cliente(struct cidade *main,char *cpf);

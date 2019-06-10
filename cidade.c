@@ -50,6 +50,21 @@ char *get_cidade_nome(struct cidade *cidade_atual)
 	return cidade_atual -> nome;
 }
 
+int get_cidade_clientes_count(struct cidade *atual)
+{
+	return atual -> count_clientes;
+}
+
+int get_cidade_count(struct cidade *root)
+{
+	return root -> count_cidades;
+}
+
+int get_roteiros_count(struct cidade *base)
+{
+	return base -> count_roteiros;
+}
+
 void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova)
 {
 	struct cidade *pont_temp = cidade_base;
@@ -64,7 +79,7 @@ void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova)
 
 void listar_cidades(struct cidade *cidades)
 {	
-	struct cidade *tmp = cidades;
+	struct cidade *tmp = cidades -> next;
 	printf("\nCidades cadastradas:\n");
 	while(tmp != NULL)
 	{
@@ -75,9 +90,9 @@ void listar_cidades(struct cidade *cidades)
 
 void listar_cidades_cadastro(struct cidade *cidades)
 {	
-	struct cidade *tmp = cidades;
+	struct cidade *tmp = cidades -> next;
 	printf("\nCidades cadastradas:\n");
-	int cont = 0;
+	int cont = 1;
 	while(tmp != NULL)
 	{
 		printf("[%d] - %s\n",cont,get_cidade_nome(tmp));

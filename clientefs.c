@@ -25,7 +25,7 @@ struct cliente *criar_cliente(char *nome)
 
 	for(int i = 0;i<MAX_TAGS_LENGTH;i++)
 	{
-		novo_cliente -> tags[i] = NULL;
+		novo_cliente -> tags[i] = 0;
 	}
 	return novo_cliente;
 }
@@ -77,7 +77,7 @@ struct data get_cliente_data_n(struct cliente *cliente_atual)
 	return cliente_atual -> data_n;
 }
 
-struct tag **get_cliente_tags(struct cliente *cliente_atual)
+int *get_cliente_tags(struct cliente *cliente_atual)
 {
 	return cliente_atual -> tags;
 }

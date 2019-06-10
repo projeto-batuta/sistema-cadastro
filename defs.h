@@ -21,6 +21,7 @@ struct data
 
 struct tag 
 {
+	int id;
 	char *nome;
 	int chamadas;
 	struct tag *next;
@@ -32,7 +33,7 @@ struct cliente
 	char *cpf;
 	char genero;
 	struct data data_n;
-	struct tag *tags[MAX_TAGS_LENGTH];
+	int tags[MAX_TAGS_LENGTH];
 	struct cliente *next;
 	struct cliente *prev;
 };

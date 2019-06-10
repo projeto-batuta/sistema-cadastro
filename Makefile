@@ -5,6 +5,9 @@ LINKERFLAG = -Wall
 sistema_cadastro: main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
 	$(CC) -o sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
 
+debug_cadastro:  main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
+	$(CC) -g sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
+
 main.o: main.c defs.h
 	$(CC) -c main.c
 
