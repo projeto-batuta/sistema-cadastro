@@ -43,7 +43,7 @@ struct passeio
 	int id;
 	struct data data_agenda;
 	int ativo;
-	struct cliente *clientes[MAX_CLIENTES];
+	char *clientes[MAX_CLIENTES];
 	struct passeio *next;
 	struct passeio *prev;
 };
@@ -65,8 +65,6 @@ struct cidade
 	int count_clientes;
 	struct cliente *clientes;
 	struct cliente *last_cliente;
-	int count_roteiros;
-	struct roteiro *roteiros;
 	int count_cidades;
 	struct cidade *next;
 };

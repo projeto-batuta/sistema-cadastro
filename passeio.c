@@ -24,7 +24,7 @@ struct passeio *criar_passeio(int id)
 
 	for(int i = 0;i<MAX_CLIENTES;i++)
 	{
-		novo_passeio -> clientes[i] = NULL;
+		novo_passeio -> clientes[i] = "";
 	}
 	return novo_passeio;
 }
@@ -52,7 +52,7 @@ void set_passeio_ativo(struct passeio *paseio_atual,int estado)
 void set_passeio_cliente(struct passeio *passeio_atual,
 	struct cliente *cliente_atual,int index)
 {
-	passeio_atual -> clientes[index] = cliente_atual;
+	passeio_atual -> clientes[index] = cliente_atual -> cpf;
 }
 
 struct cliente **get_passeio_clientes(struct passeio *passeio_atual)
@@ -110,8 +110,8 @@ void inserir_passeio(struct roteiro *roteiro_base,struct passeio *passeio_novo)
 void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *cliente_atual)
 {
 	for(int i = 0;i < MAX_CLIENTES;i++){
-		if(passeio_atual -> clientes[i] == NULL){
-			passeio_atual -> clientes[i] = cliente_atual;
+		if(passeio_atual -> clientes[i] == ""){
+			passeio_atual -> clientes[i] = get_cliente_cpf(cliente_atual);
 			break;
 		}
 		else if (i == MAX_TAGS_LENGTH - 1)

@@ -18,11 +18,9 @@ struct cidade *criar_cidade(char *nome)
 		malloc(sizeof(struct cidade));
 	nova_cidade -> count_cidades = 0;
 	nova_cidade -> count_clientes = 0;
-	nova_cidade -> count_roteiros = 0;
 	nova_cidade -> nome = nome;
 	nova_cidade -> clientes = NULL;
 	nova_cidade -> last_cliente = NULL;
-	nova_cidade -> roteiros = NULL;
 	nova_cidade -> next = NULL;
 	return nova_cidade;
 }
@@ -58,11 +56,6 @@ int get_cidade_clientes_count(struct cidade *atual)
 int get_cidade_count(struct cidade *root)
 {
 	return root -> count_cidades;
-}
-
-int get_roteiros_count(struct cidade *base)
-{
-	return base -> count_roteiros;
 }
 
 void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova)
@@ -106,14 +99,17 @@ struct cidade *buscar_cidade_index(struct cidade *main,int i)
 	struct cidade *result = NULL;
 	struct cidade *pont_temp = main;
 	int cont = 0;
-	while(pont_temp != NULL)
+	if(i <= main -> count_cidades)
 	{
-		if(cont == i)
+		while(pont_temp != NULL)
 		{
-			result = pont_temp;
+			if(cont == i)
+			{
+				result = pont_temp;
+			}
+			pont_temp = pont_temp -> next;
+			cont++;
 		}
-		pont_temp = pont_temp -> next;
-		cont++;
 	}
 	return result;
 }
@@ -129,7 +125,7 @@ void limpar_cidades(struct cidade *cidade_root)
 		{
 			if(cidade_temp == cidade_root -> next) cidade_root -> next = NULL;
 			limpar_clientes(cidade_temp);
-			limpar_roteiros(cidade_temp);
+			// limpar_roteiros(cidade_temp);
 			free(cidade_temp);
 			cidade_temp = cidade_next;
 		}

@@ -85,13 +85,22 @@ int cadastro_cidade(struct cidade *root){
 	inserir_cidade(root,nova_cidade);
 }
 
-void demo(struct cidade *root,struct tag *tag_root)
+void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 {
 	struct cidade *cidade_olinda = criar_cidade("OLINDA");
 	struct cidade *cidade_recife = criar_cidade("RECIFE");
 	struct cidade *cidade_jab = criar_cidade("JABOATAO_DOS_GUARARAPES");
 	struct cidade *cidade_gravata_beach = criar_cidade("GRAVATA_BEACH");
 
+	struct roteiro *novo_recolinda = criar_roteiro("RECIFE-OLINDA");
+	struct roteiro *novo_bvolinda = criar_roteiro("BV_OLINDA");
+
+	inserir_roteiro(roteiro_root,novo_recolinda);
+	set_roteiro_duracao(novo_recolinda,0,2,30);
+	inserir_roteiro(roteiro_root,novo_bvolinda);
+
+	limpar_roteiros(roteiro_root);
+	listar_roteiros(roteiro_root);
 
 	inserir_cidade(root,cidade_olinda);
 	inserir_cidade(root,cidade_recife);
@@ -205,7 +214,10 @@ int main(void){
 	char *nome = "Recife";
 	struct cidade *principal = criar_cidade("ROOT");
 	struct tag *principat_tag = criar_tag("ROOT");
-	demo(principal,principat_tag);
+	struct roteiro *principal_roteiro = criar_roteiro("ROOT");
+
+
+	demo(principal,principat_tag,principal_roteiro);
 
 	// interface(principal,principat_tag);
 
@@ -235,6 +247,6 @@ int main(void){
 	listar_clientes(principal -> next);
 	// printf("%s",tags);
 	// struct cidade *primary = principal -> next;
-	// limpar_cidades(primary);
+	// limpar_cidades(principal); 
 	return 0 ;
 }

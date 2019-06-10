@@ -102,10 +102,12 @@ void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo)
 void listar_clientes(struct cidade *cidade_atual)
 {
 	struct cliente *pont_temp = cidade_atual -> clientes;
-	printf("\nClientes cadastrados em %s:\n",get_cidade_nome(cidade_atual));
+	int count=1;
+	printf("\nClientes cadastrados em %s:\n\n",get_cidade_nome(cidade_atual));
 	while(pont_temp != NULL){
-		printf("- Nome: %s\n  CPF: %s\n\n",get_cliente_nome(pont_temp),get_cliente_cpf(pont_temp));
+		printf("[%d] - Nome: %s\n      CPF: %s\n\n",count,get_cliente_nome(pont_temp),get_cliente_cpf(pont_temp));
 		pont_temp = pont_temp -> next;
+		count++;
 	}
 }
 
