@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -10,7 +7,6 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
-#endif
 
 struct passeio *criar_passeio(int id)
 {
@@ -55,7 +51,7 @@ void set_passeio_cliente(struct passeio *passeio_atual,
 	passeio_atual -> clientes[index] = cliente_atual -> cpf;
 }
 
-struct cliente **get_passeio_clientes(struct passeio *passeio_atual)
+char **get_passeio_clientes(struct passeio *passeio_atual)
 {
 	return passeio_atual -> clientes; 
 }

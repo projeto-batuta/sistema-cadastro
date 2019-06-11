@@ -7,11 +7,12 @@
 #define TRUE 1
 #define FALSE 0
 #define NONE 0 //Apenas para o uso de char
+#include <ctype.h>
+
 
 /*Structs*/
 
-struct data 
-{
+struct data {
 	int ano;
 	int mes;
 	int dia;
@@ -19,16 +20,14 @@ struct data
 	int min;
 };
 
-struct tag 
-{
+struct tag {
 	int id;
 	char *nome;
 	int chamadas;
 	struct tag *next;
 };
 
-struct cliente
-{
+struct cliente {
 	char *nome;
 	char *cpf;
 	char genero;
@@ -38,8 +37,7 @@ struct cliente
 	struct cliente *prev;
 };
 
-struct passeio
-{
+struct passeio {
 	int id;
 	struct data data_agenda;
 	int ativo;
@@ -48,8 +46,7 @@ struct passeio
 	struct passeio *prev;
 };
 
-struct roteiro
-{
+struct roteiro {
 	char *nome;
 	char *info;
 	struct data duracao;
@@ -59,8 +56,7 @@ struct roteiro
 	struct passeio *last_passeio;
 };
 
-struct cidade
-{
+struct cidade {
 	char *nome;
 	int count_clientes;
 	struct cliente *clientes;
@@ -69,4 +65,5 @@ struct cidade
 	struct cidade *next;
 };
 
-struct tag *tags;
+char *recebe_string();
+void listar_cidades_e_clientes(struct cidade *base);

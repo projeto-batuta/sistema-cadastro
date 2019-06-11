@@ -12,17 +12,6 @@
 #include "tags.h"
 #endif
 
-// struct tag *criar_tag(char *nome)
-// {
-// 	struct tag *nova_tag = (struct tag*)
-// 		malloc(sizeof(struct tag));
-// 	nova_tag -> id = 0;
-// 	nova_tag -> nome = nome;
-// 	nova_tag -> chamadas = 0;
-// 	nova_tag -> next = NULL;
-// 	return nova_tag;
-// }
-
 void set_tag_nome(struct tag *tag_atual,char *nome)
 {
 	tag_atual -> nome = nome;
@@ -37,7 +26,6 @@ void set_tag_next(struct tag *tag_atual,struct tag *next)
 {
 	tag_atual -> next = next;
 }
-
 
 char *get_tag_nome(struct tag  *tag_atual)
 {
@@ -76,36 +64,6 @@ struct tag *criar_tag(char *nome)
         return nova_tag;
 }
 
-void insere_tag (struct tag *root, char *nome)
-{
-        struct tag *nova_tag = criar_tag(nome);
-        struct tag *aux = root;
-
-        int count = 1;
-
-        while (aux->next != NULL) {
-                aux = aux->next;
-                count++;
-        }
-
-        nova_tag->id = count;
-        aux->next = nova_tag;
-}
-
-
-// void inserir_tag(struct tag *root,struct tag *tag_nova)
-// {	
-// 	struct tag *pont_temp = root;
-// 	if (pont_temp -> next == NULL) 
-// 		pont_temp -> next = tag_nova;
-// 	else {
-// 		while (pont_temp -> next != NULL) 
-// 			pont_temp = pont_temp -> next;
-// 		pont_temp -> next = tag_nova;
-// 	}
-// 	root -> chamadas++;
-// }
-
 void insere_tag_cliente(struct cliente *cliente_atual,struct tag *tag_root, int tag_id)
 {
 	struct tag *tag_atual = buscar_id_tag(tag_root,tag_id);
@@ -116,12 +74,11 @@ void insere_tag_cliente(struct cliente *cliente_atual,struct tag *tag_root, int 
 			if(list[i] == 0 && inserido == FALSE){
 				list[i] = get_tag_id(tag_atual);
 				inserido = TRUE;
+                                tag_atual->chamadas++;
 			}
 		}
 	}
 }
-
-
 
 void listar_tags(struct tag *root)
 {
@@ -148,4 +105,94 @@ void listar_tags_cliente(struct cliente *cliente_atual,struct tag *tag_root)
 		}
 		
 	}
+}
+
+void insere_tag (struct tag *root, char *nome)
+{
+        struct tag *nova_tag = criar_tag(nome);
+        int count = 1;
+
+
+        while (root->next != NULL) {
+                root = root->next;
+                count++;
+        }
+        nova_tag->id = count;
+
+        root->next = nova_tag;
+        nova_tag->next = NULL;
+}
+
+struct tag *constroi_tags (struct tag *root)
+{
+        char *nomes[10];
+        nomes[0] = "GASTRONOMIA";
+        nomes[1] = "AVENTURA";
+        nomes[2] = "ESPORTES";
+        nomes[3] = "EXPLORACAO";
+        nomes[4] = "ARQUITETURA";
+        nomes[5] = "HISTORIA";
+        nomes[6] = "ARTESANATO";
+        nomes[7] = "ECOLOGIA";
+        nomes[8] = "CULTURA";
+        nomes[9] = "FESTIVAIS";
+
+        for(int i = 0; i < 10; i++) {
+                insere_tag(root, nomes[i]);
+        }
+        return root;
+}
+
+void escreve_tags(struct tag *root)
+{
+        FILE *fp;
+        struct tag *aux = root->next;
+        if (!(fp = fopen("reg_tags.dat", "wb")))
+                exit(1);
+
+        while(aux != NULL) {
+                fwrite(aux, sizeof(struct tag), 1, fp);
+                aux = aux->next;
+        }
+
+        if (fclose(fp)){
+                printf("error closing file.");
+                exit(-1);
+        }
+}
+
+void carrega_tags (struct tag *root)
+{
+        char *nomes[10];
+        nomes[0] = "GASTRONOMIA";
+        nomes[1] = "AVENTURA";
+        nomes[2] = "ESPORTES";
+        nomes[3] = "EXPLORACAO";
+        nomes[4] = "ARQUITETURA";
+        nomes[5] = "HISTORIA";
+        nomes[6] = "ARTESANATO";
+        nomes[7] = "ECOLOGIA";
+        nomes[8] = "CULTURA";
+        nomes[9] = "FESTIVAIS";
+        
+        FILE *fp;
+
+        if (!(fp = fopen("reg_tags.dat", "rb")))
+                exit(1);
+                
+        for (int i = 0; i < 10; i++) {
+                struct tag *tag_atual = criar_tag(NULL);
+
+                fread(tag_atual, sizeof(struct tag), 1, fp);
+                
+                root->next = tag_atual;
+                tag_atual->nome = nomes[i];
+                tag_atual->next = NULL;
+                root = root->next;
+        }
+
+        if (fclose(fp)){
+                printf("error closing file.");
+                exit(-1);
+        }
 }

@@ -2,16 +2,16 @@ CC = gcc
 
 LINKERFLAG = -Wall
 
-sistema_cadastro: main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
-	$(CC) -o sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
+sistema_cadastro: main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+	$(CC) -o sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
 
-debug_cadastro:  main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
-	$(CC) -g sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o
+debug_cadastro:  main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+	$(CC) -g sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
 
 main.o: main.c defs.h
 	$(CC) -c main.c
 
-tags.o: tags.c tags.h 
+tags.o: tags.c tags.h
 	$(CC) -c tags.c
 
 roteiro.o: roteiro.c roteiro.h
@@ -29,6 +29,9 @@ cidade.o: cidade.c cidade.h
 data.o: data.c data.h
 	$(CC) -c data.c
 
+defs.o: defs.c defs.h
+	$(CC) -c defs.c
+
 clean:
 	@echo "Cleaning up..."
-	rm -rvf *.o
+	rm -rvf *.o sistema_cadastro

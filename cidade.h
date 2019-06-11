@@ -12,3 +12,7 @@ void listar_cidades(struct cidade *cidades);
 void listar_cidades_cadastro(struct cidade *cidades);
 struct cidade *buscar_cidade_index(struct cidade *main,int i);
 void limpar_cidades(struct cidade *cidade_root);
+int cadastro_cidade(struct cidade *root);
+int cadastro(struct cidade *cidade_base);
+
+

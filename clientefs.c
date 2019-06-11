@@ -16,6 +16,12 @@ struct cliente *criar_cliente(char *nome)
 {
 	struct cliente *novo_cliente = (struct cliente *)
 		malloc(sizeof(struct cliente));
+
+        if (!novo_cliente) {
+                printf("Malloc error at novo_cliente\n");
+                exit(1);
+        }
+
 	novo_cliente -> nome = nome;
 	novo_cliente -> cpf = NULL;
 	novo_cliente -> genero = 'd';
@@ -29,6 +35,7 @@ struct cliente *criar_cliente(char *nome)
 	}
 	return novo_cliente;
 }
+
 void set_cliente_next(struct cliente *cliente_atual,struct cliente *next)
 {
 	cliente_atual -> next = next;
@@ -141,10 +148,103 @@ void limpar_clientes(struct cidade *cidade_base)
 		cliente_next = cliente_temp -> next;
 		while(cliente_temp != NULL)
 		{
-			if(cliente_temp -> prev == NULL) cidade_base -> clientes = NULL;
+			if(cliente_temp -> prev == NULL)
+                                cidade_base->clientes = NULL;
 			free(cliente_temp);
 			cliente_temp = cliente_next;
 		}
 	}
 }
 
+struct cidade *carrega_cli_cid(struct cidade *root)
+{
+        int qtd_cidades, qtd_clientes;
+        FILE *fp;
+
+        if (!(fp = fopen("reg_cli_cid.dat", "wb")))
+                exit(1);
+
+        fread(root, sizeof(struct cidade), 1, fp);
+        qtd_cidades = root->count_cidades;
+
+        for (int i = 0; i < qtd_cidades; i++) {
+                struct cidade *cidade_atual = criar_cidade(NULL);
+                char *nome_cidade = malloc(NAME_LENGTH*sizeof(char));
+
+                // le do arquivo a struct cidade e o nome da cidade, em seguida
+                // faz as atribuiçoes do nome e dos ponteiros.
+                fread(cidade_atual, sizeof(struct cidade), 1, fp);
+                fread(nome_cidade, sizeof(char), NAME_LENGTH, fp);
+
+                cidade_atual->nome = nome_cidade;
+                root->next = cidade_atual;
+                cidade_atual->next = NULL;
+                root = root->next;
+
+                qtd_clientes = cidade_atual->count_clientes;
+
+                for(int j = 0; j < qtd_clientes; j++) {
+                        struct cliente *cliente_atual = criar_cliente(NULL);
+                        struct cliente *aux;
+                        char *nome_cliente = malloc(NAME_LENGTH*(sizeof(char)));
+                        char *cpf = malloc(CPF_LENGTH*(sizeof(char)));
+
+                        fread(cliente_atual, sizeof(struct cliente), 1, fp);
+                        fread(nome_cliente, sizeof(char), NAME_LENGTH, fp);
+                        fread(cpf, sizeof(char), CPF_LENGTH, fp);
+
+                        cliente_atual->nome = nome_cliente;
+                        cliente_atual->cpf = cpf;
+
+                        if (j == 0){
+                                cidade_atual->clientes = cliente_atual;
+                                aux = cliente_atual;
+                        }
+
+                        aux->next = cliente_atual;
+                        cliente_atual->next = NULL;
+                        aux = aux->next;
+                }
+        }
+        
+        if (fclose(fp)) {
+                printf("error closing file.");
+                exit(-1);
+        }
+}
+
+void registra_cli_cid(struct cidade *root)
+{
+        struct cidade *cidade_atual = root->next;
+        struct cliente *cliente_atual;
+
+        FILE *fp;
+
+        if (!(fp = fopen("reg_cli_cid.dat", "wb")))
+                exit(1);
+
+        fwrite(&root, sizeof(struct cidade), 1, fp);
+
+        while (cidade_atual != NULL)
+        {
+                cliente_atual = cidade_atual->clientes;
+                fwrite(&cidade_atual, sizeof(struct cidade), 1, fp);
+                fwrite(cidade_atual->nome,sizeof(char), NAME_LENGTH, fp);
+
+                while (cliente_atual != NULL)
+                {
+                        fwrite(&cliente_atual, sizeof(struct cliente), 1, fp);
+                        fwrite(cliente_atual->nome,sizeof(char), NAME_LENGTH, fp);
+                        fwrite(cliente_atual->cpf, sizeof(char), CPF_LENGTH, fp);
+                        cliente_atual = cliente_atual->next;
+                }
+
+                cidade_atual = cidade_atual->next;
+        }
+
+        if (fclose(fp))
+        {
+                printf("error closing file.");
+                exit(-1);
+        }
+}
