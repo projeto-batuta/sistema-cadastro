@@ -25,6 +25,7 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 
 	struct passeio *passeio_mimo = criar_passeio(1);
 	inserir_passeio(novo_recolinda,passeio_mimo);
+	set_passeio_agenda(passeio_mimo,2019,7,13,17,30);
 
 	inserir_roteiro(roteiro_root,novo_recolinda);
 	set_roteiro_duracao(novo_recolinda,0,2,30);
@@ -71,17 +72,6 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 
 }
 
-// void list_cli_faixa_idade(struct cidade *base,int init,int end,int ano_atual)
-// {
-// 	int clientes_count = get_cidade_clientes_count(base);
-// 	struct cliente *tmp = base -> clientes;
-// 	for(int i = 0; i < clientes_count;i++ )
-// 	{
-// 		if()
-// 	}
-// }
-
-
 void imprimir_opcoes(int contexto)
 {
 	char *contextos [4] = {"Cidades","Clientes","Roteiros","Passeios"};
@@ -119,7 +109,7 @@ int main(void)
 
 	demo(root -> root_cidade,root -> tag_root, root -> root_roteiro);
 
-	listar_cidades_idade_media(root ->root_cidade);
+	listar_cidades_idade_mediana(root ->root_cidade);
 
 	registra_cli_cid(root -> root_cidade);
         // carrega_cli_cid(principal);

@@ -233,7 +233,7 @@ int get_cidades_min_idade(struct cidade *principal)
 	return menor;
 }
 
-void listar_cidades_idade_media(struct cidade *principal)
+void listar_cidades_idade_mediana(struct cidade *principal)
 {
 	printf("\nCidades e suas idades(médias)\n");
 	struct cidade *tmp = principal;

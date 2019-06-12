@@ -18,4 +18,4 @@ int get_cidade_max_idade(struct cidade *base);
 int get_cidade_min_idade(struct cidade *base);
 int get_cidades_max_idade(struct cidade *principal);
 int get_cidades_min_idade(struct cidade *principal);
-// void listar_cidades_idade_media(struct cidade *principal);
+void listar_cidades_idade_mediana(struct cidade *principal);
