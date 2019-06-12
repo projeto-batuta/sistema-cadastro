@@ -63,6 +63,11 @@ struct data get_roteiro_duracao(struct roteiro *roteiro_atual)
 	return roteiro_atual -> duracao;
 }
 
+struct passeio *get_roteiro_passeios(struct roteiro *roteiro_base)
+{
+	return roteiro_base -> passeios;
+}
+
 void inserir_roteiro(struct roteiro *roteiro_base, struct roteiro *roteiro_novo)
 {
 	struct roteiro *aux = roteiro_base;

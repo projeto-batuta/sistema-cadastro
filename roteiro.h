@@ -2,6 +2,7 @@ struct roteiro *criar_roteiro(char *nome);
 void set_roteiro_nome(struct roteiro *roteiro_atual,char *nome);
 void set_roteiro_info(struct roteiro *roteiro_atual,char *info);
 void set_roteiro_duracao(struct roteiro *roteiro_atual,int dia,int hora,int min);
+struct passeio *get_roteiro_passeios(struct roteiro *roteiro_base);
 void set_roteiro_last_passeio(struct roteiro *roteiro_atual, struct passeio *last);
 int get_roteiro_count(struct roteiro *roteiro_base);
 char *get_roteiro_nome(struct roteiro *roteiro_atual);

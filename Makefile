@@ -1,6 +1,6 @@
 CC = gcc
 
-objects = main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+objects = main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o session.o
 
 LINKERFLAG = -Wall
 

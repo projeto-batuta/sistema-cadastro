@@ -7,6 +7,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 
 struct passeio *criar_passeio(int id)
 {
@@ -81,6 +82,18 @@ int get_passeio_estado(struct passeio *passeio_atual)
 	return passeio_atual -> ativo;
 }
 
+int get_passeio_clientes_count
+	(struct passeio *passeio_atual)
+{
+	int result = 0;
+	for(int i = 0; i< MAX_CLIENTES;i++)
+	{
+		if(passeio_atual -> clientes[i] != "") result++;
+		else break;
+	}
+	return result;
+}
+
 void inserir_passeio(struct roteiro *roteiro_base,struct passeio *passeio_novo)
 {
 	struct roteiro *pont_roteiro = roteiro_base;
@@ -112,6 +125,31 @@ void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *clien
 		}
 		else if (i == MAX_TAGS_LENGTH - 1)
 			break;
+	}
+}
+
+
+
+void listar_passeios(struct roteiro *roteiro_base)
+{
+	printf("\nPasseios cadastrados com roteiro: %s\n",
+		get_roteiro_nome(roteiro_base));
+	if(roteiro_base -> passeios != NULL){
+		struct passeio *passeio_tmp = roteiro_base -> passeios;
+		while(passeio_tmp != NULL){
+			printf("\n[%d] - [Data:%d/%d/%d]\n      Status: %d\n",
+				get_passeio_id(passeio_tmp),
+				get_passeio_agenda(passeio_tmp).dia,
+				get_passeio_agenda(passeio_tmp).mes,
+				get_passeio_agenda(passeio_tmp).ano,
+				get_passeio_estado(passeio_tmp));
+				printf("      Numero de clientes cadastrados:%d\n",
+				get_passeio_clientes_count(passeio_tmp));
+			passeio_tmp = passeio_tmp -> next;
+		}
+	}
+	else{
+		printf("Nenhum passeio marcado");
 	}
 }
 

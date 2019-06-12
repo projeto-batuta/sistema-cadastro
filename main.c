@@ -8,6 +8,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 
 /*Cadastro*/
 
@@ -22,12 +23,12 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 	struct roteiro *novo_recolinda = criar_roteiro("RECIFE-OLINDA");
 	struct roteiro *novo_bvolinda = criar_roteiro("BV_OLINDA");
 
+	struct passeio *passeio_mimo = criar_passeio(1);
+	inserir_passeio(novo_recolinda,passeio_mimo);
+
 	inserir_roteiro(roteiro_root,novo_recolinda);
 	set_roteiro_duracao(novo_recolinda,0,2,30);
 	inserir_roteiro(roteiro_root,novo_bvolinda);
-
-	limpar_roteiros(roteiro_root);
-	listar_roteiros(roteiro_root);
 
 	inserir_cidade(root,cidade_olinda);
 	inserir_cidade(root,cidade_recife);
@@ -62,18 +63,12 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 	inserir_cliente(cidade_recife,cliente_jorgete);
 	inserir_cliente(cidade_recife,cliente_maicon);
 	inserir_cliente(cidade_gravata_beach,cliente_waldisney);
-}
 
-int get_cliente_maior_idade_cidade(struct cidade *base)
-{
-	struct cliente *tmp = base -> clientes;
-	int maior = tmp -> data_n.ano;
-	while (tmp != NULL){
-		if(get_cliente_data_n(tmp).ano < maior)
-			maior = get_cliente_data_n(tmp).ano;
-		tmp = tmp -> next;
-	}
-	return maior;
+	inserir_cliente_passeio(passeio_mimo,cliente_maicon);
+
+	listar_roteiros(roteiro_root);
+	listar_passeios(novo_recolinda);
+
 }
 
 int get_cliente_maior_idade_geral(struct cidade *principal)
@@ -123,20 +118,19 @@ void interface(struct cidade *cidade_root,struct tag *tag_root)
 int main(void)
 {
 	char *nome = "Recife";
-	struct cidade *principal = criar_cidade("ROOT");
-	struct tag *tag_root = criar_tag("ROOT");
-	struct roteiro *principal_roteiro = criar_roteiro("ROOT");
+	struct session *root = criar_session();
 
-	demo(principal,tag_root,principal_roteiro);
+	demo(root -> root_cidade,root -> tag_root, root -> root_roteiro);
 
-        registra_cli_cid(principal);
+	listar_cidades_idade_media(root ->root_cidade);
+
+	registra_cli_cid(root -> root_cidade);
         // carrega_cli_cid(principal);
 
-	listar_cidades(principal);
+	listar_cidades(root -> root_cidade);
 
-	listar_cidades_e_clientes(principal);
+	listar_cidades_e_clientes(root -> root_cidade);
 
-	listar_clientes(principal -> next);
 
 	return 0 ;
 }

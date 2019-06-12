@@ -28,6 +28,7 @@ char *recebe_string()
 	return nome;
 }
 
+
 void listar_cidades_e_clientes(struct cidade *base)
 {
 	for(int i = 1;i <= base -> count_cidades;i++){

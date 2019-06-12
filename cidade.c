@@ -8,6 +8,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 
 struct cidade *criar_cidade(char *nome)
 {
@@ -108,21 +109,15 @@ struct cidade *buscar_cidade_index(struct cidade *main,int i)
 	return result;
 }
 
-void limpar_cidades(struct cidade *cidade_root)
+void limpar_cidades(struct cidade *cidades)
 {
-	struct cidade *cidade_temp = cidade_root;
-	struct cidade *cidade_next;
-	if(cidade_temp != NULL)
-	{
-		cidade_next = cidade_temp -> next;
-		while (cidade_temp != NULL)
-		{
-			if(cidade_temp == cidade_root -> next) cidade_root -> next = NULL;
-			limpar_clientes(cidade_temp);
-			// limpar_roteiros(cidade_temp);
-			free(cidade_temp);
-			cidade_temp = cidade_next;
-		}
+	struct cidade *cidade_temp = cidades;
+	struct cidade *next;
+	if(cidade_temp != NULL){
+		next = cidade_temp;
+		free(cidade_temp);
+		// limpar_clientes(cidade_temp ->clientes);
+		limpar_cidades(next);
 	}
 }
 
@@ -178,4 +173,77 @@ int cadastro_cidade(struct cidade *root)
 	nome = recebe_string();
 	struct cidade *nova_cidade = criar_cidade(nome);
 	inserir_cidade(root,nova_cidade);
+}
+
+int get_cidade_max_idade(struct cidade *base)
+{
+	struct cliente *tmp = base -> clientes;
+	int maior = tmp -> data_n.ano;
+	while (tmp != NULL){
+		if(get_cliente_data_n(tmp).ano < maior)
+			maior = get_cliente_data_n(tmp).ano;
+		tmp = tmp -> next;
+	}
+	return maior;
+}
+
+int get_cidade_min_idade(struct cidade *base)
+{
+	struct cliente *tmp = base -> clientes;
+	int menor = tmp -> data_n.ano;
+	while (tmp != NULL){
+		if(get_cliente_data_n(tmp).ano > menor)
+			menor = get_cliente_data_n(tmp).ano;
+		tmp = tmp -> next;
+	}
+	return menor;
+}
+
+int get_cidades_max_idade(struct cidade *principal)
+{
+	struct cidade *tmp = principal -> next;
+	int maior = get_cidade_max_idade(tmp);
+	if(maior != 0){
+		while(tmp != 0){
+			if(get_cidade_max_idade(tmp) < maior)
+				maior = get_cidade_max_idade(tmp);
+			tmp = tmp -> next;
+		}
+	}
+	return maior;
+}
+
+int get_cidades_min_idade(struct cidade *principal)
+{
+	struct cidade *tmp = principal -> next;
+	int menor = get_cidade_max_idade(tmp);
+	if(menor != 0){
+		while(tmp != 0){
+			if(get_cidade_max_idade(tmp) > menor)
+				menor = get_cidade_max_idade(tmp);
+			tmp = tmp -> next;
+		}
+	}
+	return menor;
+}
+
+void listar_cidades_idade_media(struct cidade *principal)
+{
+	printf("\nCidades e suas idades(médias)\n");
+	struct cidade *tmp = principal;
+	int maior = get_cidades_max_idade(principal);
+	int menor = get_cidades_min_idade(principal);
+	tmp = tmp -> next;
+	while (tmp != NULL)
+	{
+		int menor_tmp = get_cidade_min_idade(tmp);
+		int maior_tmp = get_cidade_max_idade(tmp);
+		int media = (maior_tmp + menor_tmp)/2;
+		printf("\n[%s]\n",get_cidade_nome(tmp));
+		plotar_graf(maior,menor,media,2);
+		tmp = tmp -> next;
+	}
+	printf("\n\n[%d]-------------------------------------[%d]\n",maior,menor);
+	
+
 }
