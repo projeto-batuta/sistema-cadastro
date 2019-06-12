@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdio_ext.h>
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -72,52 +73,103 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 
 }
 
-void imprimir_opcoes(int contexto)
+void imprimir_opcoes(int opcao)
 {
-	char *contextos [4] = {"Cidades","Clientes","Roteiros","Passeios"};
-	char *opcoes [4] = {"Criar","Listar","Buscar","Inserir"};
-	if(contexto >=0){
-		printf("\n[Opcoes] - %s", contextos[contexto]);
-		for(int i = 0;i < 4;i++){
-			printf("\n[%d] - %s", (i+1),opcoes[i]);
-		}
-	}
-	else{
-		printf("\n[Opcoes] - Contexto");
-		for(int i = 0;i < 4;i++){
-			printf("\n[%d] - %s", (i+1),contextos[i]);
-		}
-	}
+        printf("\n");
+	char *listagens[3] = {"1 - Cidades e clientes", "2 - Cidades", "3 - Tags"};
+        char *estats[2] = {"1 - Idade", "2 - Tags"};
+        switch(opcao){
+        case 2:
+                for (int i = 0; i < 3; i++){
+                        printf("%s\n",listagens[i]);
+                }
+                break;
+        case 3:
+                for (int i = 0; i < 2; i++){
+                        printf("%s\n", estats[i]);
+                }
+                break;
+        default:
+                printf("Opcao invalida\n");
+                break;
+        }       
 }
 
-void interface(struct cidade *cidade_root,struct tag *tag_root)
+int interface(struct session *sessao)
 {
-	char *contextos [4] = {"Cidades","Clientes","Roteiros","Passeios"};
-	printf("Bem vindo ao FREVO - Edição Terminal                        ");
-	int escolha;
-	printf("\nEscolha o contexto desejado:\n\n");
-	imprimir_opcoes(-1);
-	scanf("%d",&escolha);
-	imprimir_opcoes(escolha-1);
+	printf("Bem vindo ao FREVO - Edição Terminal\n");
+	printf("1 - Cadastrar novo cliente\n");
+        printf("2 - Listagens\n");
+        printf("3 - Estatísticas\n");
+        printf("4 - Sair\n");
 
+        int escolha;
+        scanf("%d", &escolha);
+        switch (escolha) {
+        case 1:
+                cadastro(sessao->root_cidade);
+                __fpurge(stdin);
+                break;
+        
+        case 2:
+                imprimir_opcoes(escolha);
+                int listagem;
+                scanf("%d", &listagem);
+                switch(listagem){
+                case 1:
+                        listar_cidades_e_clientes(sessao->root_cidade);
+                        break;
+                case 2:
+                        listar_cidades(sessao->root_cidade);
+                        break;
+                case 3:
+                        listar_tags(sessao->tag_root);
+                        break;
+                default:
+                        printf("Opcao invalida\n");
+                        break;
+                }
+                break;                
+        
+        case 3:
+                imprimir_opcoes(escolha);
+                break;
+        case 4:
+                return TRUE;
+        
+        default:
+                printf("Opcao invalida\n");
+                break;
+        }
+        return FALSE;
 }
 
 int main(void)
 {
-	char *nome = "Recife";
 	struct session *root = criar_session();
+        carrega_tags(root->tag_root);
+        carrega_cli_cid(root->root_cidade);
+        
+        while (TRUE) {
+                int teste_saida;
+                teste_saida = interface(root);
+                if (teste_saida){
+                        registra_cli_cid(root->root_cidade);
+                        escreve_tags(root->tag_root);
+                        break;
+                }
+        }        
+        
 
-	demo(root -> root_cidade,root -> tag_root, root -> root_roteiro);
-
-	listar_cidades_idade_mediana(root ->root_cidade);
+	// listar_cidades_idade_mediana(root ->root_cidade);
 
 	// registra_cli_cid(root -> root_cidade);
         // carrega_cli_cid(principal);
 
-	listar_cidades(root -> root_cidade);
+	// listar_cidades(root -> root_cidade);
 
-	listar_cidades_e_clientes(root -> root_cidade);
+	// listar_cidades_e_clientes(root -> root_cidade);
 
 
-	return 0 ;
+	return 0;
 }

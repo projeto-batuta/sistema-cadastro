@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdio_ext.h>
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -11,12 +12,13 @@
 
 char *recebe_string()
 {
+        __fpurge(stdin);
 	int pos_string= 0, tamanho = 1;
 	char *nome = malloc(tamanho * sizeof(char));
 	char c;
 
 	while(1) {
-        c = getchar();
+                c = getchar();
 		if(c == '\n'){
 			break;
 		}

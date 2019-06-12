@@ -12,8 +12,6 @@ void listar_cidades(struct cidade *cidades);
 void listar_cidades_cadastro(struct cidade *cidades);
 struct cidade *buscar_cidade_index(struct cidade *main,int i);
 void limpar_cidades(struct cidade *cidades);
-int cadastro_cidade(struct cidade *root);
-int cadastro(struct cidade *cidade_base);
 int get_cidade_max_idade(struct cidade *base);
 int get_cidade_min_idade(struct cidade *base);
 int get_cidades_max_idade(struct cidade *principal);

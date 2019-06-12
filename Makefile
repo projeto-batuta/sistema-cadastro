@@ -34,6 +34,9 @@ data.o: data.c data.h
 defs.o: defs.c defs.h
 	$(CC) -c defs.c
 
+session.o: session.c session.h
+	$(CC) -c session.c
+
 clean:
 	@echo "Cleaning up..."
 	rm -rvf *.o sistema_cadastro

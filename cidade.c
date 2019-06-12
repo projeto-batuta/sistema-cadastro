@@ -83,6 +83,7 @@ void listar_cidades_cadastro(struct cidade *cidades)
 {	
 	struct cidade *tmp = cidades -> next;
 	printf("\nCidades cadastradas:\n");
+        printf("[0] - Nova cidade");
 	int cont = 1;
 	while(tmp != NULL)
 	{
@@ -92,21 +93,21 @@ void listar_cidades_cadastro(struct cidade *cidades)
 	}
 }
 
-struct cidade *buscar_cidade_index(struct cidade *main,int i)
+struct cidade *buscar_cidade_index(struct cidade *root,int index)
 {
 	struct cidade *result = NULL;
-	struct cidade *pont_temp = main;
+	struct cidade *pont_temp = root;
 	int cont = 0;
-	if(i <= main -> count_cidades) {
+	if(index <= root->count_cidades) {
 		while(pont_temp != NULL) {
-			if(cont == i)
+			if(cont == index)
 				result = pont_temp;
                                 
 			pont_temp = pont_temp -> next;
 			cont++;
 		}
 	}
-	return result;
+        return result;
 }
 
 void limpar_cidades(struct cidade *cidades)
@@ -119,60 +120,6 @@ void limpar_cidades(struct cidade *cidades)
 		// limpar_clientes(cidade_temp ->clientes);
 		limpar_cidades(next);
 	}
-}
-
-int cadastro(struct cidade *cidade_base)
-{
-	char *nome;
-	char *cidade;
-	char *cpf;
-	struct data data_Nasc = data_base();
-	char genero = 'i';
-
-	printf("\nCadastro:\n");
-  
-	printf("Insira o seu nome:\n");
-	nome = recebe_string();
-
-	printf("Insira o cpf:\n");
-	cpf = recebe_string();
-
-	listar_cidades_cadastro(cidade_base);
-	int choice;
-	printf("Selecione a sua cidade\n");
-	scanf("%d",&choice);
-	struct cidade *cidade_escolhida = buscar_cidade_index(cidade_base,choice);
-
-
-	if(buscar_cliente(cidade_base,cpf)!=NULL)
-		return FALSE;
-
-	printf("Digite o dia de nascimento:\n");
-	scanf("%d",&data_Nasc.dia);
-
-	printf("Digite o mes de nascimento:\n");
-	scanf("%d",&data_Nasc.mes);
-
-	printf("Digite ano de nascimento:\n");
-	scanf("%d",&data_Nasc.ano);
-
-	struct cliente *novo_cliente = criar_cliente(nome);
-	set_cliente_cpf(novo_cliente,cpf);
-	set_cliente_data_n(novo_cliente,data_Nasc.ano,data_Nasc.mes,data_Nasc.dia);
-	set_cliente_genero(novo_cliente,genero);
-
-	inserir_cliente(cidade_escolhida,novo_cliente);
-
-	return TRUE;
-}
-
-int cadastro_cidade(struct cidade *root)
-{
-	char *nome;
-	printf("Digite o nome da cidade:\n");
-	nome = recebe_string();
-	struct cidade *nova_cidade = criar_cidade(nome);
-	inserir_cidade(root,nova_cidade);
 }
 
 int get_cidade_max_idade(struct cidade *base)

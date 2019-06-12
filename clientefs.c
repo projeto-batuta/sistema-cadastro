@@ -159,10 +159,12 @@ void limpar_clientes(struct cliente *clientes)
 void carrega_cli_cid(struct cidade *root)
 {
         int qtd_cidades, qtd_clientes;
-        FILE *reg_clientes;
+        FILE *reg_clientes = fopen("reg_cli_cid.dat", "rb");
 
-        if (!(reg_clientes = fopen("reg_cli_cid.dat", "rb")))
-                exit(1);
+        if (!reg_clientes){
+                printf("Nenhum arquivo de clientes disponivel\n");
+                return;
+        }
 
         fread(root, sizeof(struct cidade), 1, reg_clientes);
         qtd_cidades = root->count_cidades;
@@ -225,8 +227,10 @@ void registra_cli_cid(struct cidade *root)
         }
 
         FILE *reg_clientes;
-        if (!(reg_clientes = fopen("reg_cli_cid.dat", "wb")))
-                exit(1);
+        if (!(reg_clientes = fopen("reg_cli_cid.dat", "wb"))){
+                printf("Erro ao abrir reg_cli_cid\n");
+                return;
+        }
 
         fwrite(&*root, sizeof(struct cidade), 1, reg_clientes);
         root = root->next;

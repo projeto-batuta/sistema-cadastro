@@ -143,9 +143,11 @@ struct tag *constroi_tags (struct tag *root)
 void escreve_tags(struct tag *root)
 {
         FILE *fp;
+        if (!(fp = fopen("reg_tags.dat", "wb"))) {
+                printf("erro ao abrir reg_tags\n");
+                return;
+        }
         struct tag *aux = root->next;
-        if (!(fp = fopen("reg_tags.dat", "wb")))
-                exit(1);
 
         while(aux != NULL) {
                 fwrite(aux, sizeof(struct tag), 1, fp);
@@ -172,10 +174,11 @@ void carrega_tags (struct tag *root)
         nomes[8] = "CULTURA";
         nomes[9] = "FESTIVAIS";
         
-        FILE *fp;
-
-        if (!(fp = fopen("reg_tags.dat", "rb")))
+        FILE *fp = fopen("reg_tags.dat", "rb");
+        if (!fp) {
+                printf("Erro ao ler arquivo reg_tags.dat\n");
                 exit(1);
+        }
                 
         for (int i = 0; i < 10; i++) {
                 struct tag *tag_atual = criar_tag(NULL);
