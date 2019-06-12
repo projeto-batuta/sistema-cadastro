@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -10,7 +8,6 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
-#endif
 
 struct cidade *criar_cidade(char *nome)
 {
@@ -99,14 +96,11 @@ struct cidade *buscar_cidade_index(struct cidade *main,int i)
 	struct cidade *result = NULL;
 	struct cidade *pont_temp = main;
 	int cont = 0;
-	if(i <= main -> count_cidades)
-	{
-		while(pont_temp != NULL)
-		{
+	if(i <= main -> count_cidades) {
+		while(pont_temp != NULL) {
 			if(cont == i)
-			{
 				result = pont_temp;
-			}
+                                
 			pont_temp = pont_temp -> next;
 			cont++;
 		}
@@ -150,7 +144,7 @@ int cadastro(struct cidade *cidade_base)
 
 	listar_cidades_cadastro(cidade_base);
 	int choice;
-	printf("Selecione a cidade desejada\n");
+	printf("Selecione a sua cidade\n");
 	scanf("%d",&choice);
 	struct cidade *cidade_escolhida = buscar_cidade_index(cidade_base,choice);
 

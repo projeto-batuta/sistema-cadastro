@@ -1,12 +1,14 @@
 CC = gcc
 
+objects = main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+
 LINKERFLAG = -Wall
 
-sistema_cadastro: main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
-	$(CC) -o sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+sistema_cadastro: $(objects)
+	$(CC) -o sistema_cadastro $(objects)
 
-debug_cadastro:  main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
-	$(CC) -g sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+debug_cadastro:  $(objects)
+	$(CC) -g sistema_cadastro $(objects)
 
 main.o: main.c defs.h
 	$(CC) -c main.c

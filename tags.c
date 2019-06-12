@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -10,7 +8,6 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
-#endif
 
 void set_tag_nome(struct tag *tag_atual,char *nome)
 {

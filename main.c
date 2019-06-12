@@ -76,16 +76,6 @@ int get_cliente_maior_idade_cidade(struct cidade *base)
 	return maior;
 }
 
-// void list_cli_faixa_idade(struct cidade *base,int init,int end,int ano_atual)
-// {
-// 	int clientes_count = get_cidade_clientes_count(base);
-// 	struct cliente *tmp = base -> clientes;
-// 	for(int i = 0; i < clientes_count;i++ )
-// 	{
-// 		if()
-// 	}
-// }
-
 int get_cliente_maior_idade_geral(struct cidade *principal)
 {
 	struct cidade *tmp = principal -> next;
@@ -122,11 +112,11 @@ void interface(struct cidade *cidade_root,struct tag *tag_root)
 {
 	char *contextos [4] = {"Cidades","Clientes","Roteiros","Passeios"};
 	printf("Bem vindo ao FREVO - Edição Terminal                        ");
-	int choice;
+	int escolha;
 	printf("\nEscolha o contexto desejado:\n\n");
 	imprimir_opcoes(-1);
-	scanf("%d",&choice);
-	imprimir_opcoes(choice-1);
+	scanf("%d",&escolha);
+	imprimir_opcoes(escolha-1);
 
 }
 
@@ -141,33 +131,12 @@ int main(void)
 
         registra_cli_cid(principal);
         // carrega_cli_cid(principal);
-	// interface(principal,principat_tag);
-
-	// list_cli_faixa_idade(principal -> next -> next,0,50,2019);
-
-	// printf("\n%d",get_cliente_maior_idade_cidade(buscar_cidade_index(principal,2)));
-	// int looper = TRUE;
-	// while (looper == TRUE) {	
-	// 	listar_cidades_e_clientes(principal);
-	// 	printf("\nNumero de clientes:%d", principal -> next-> count_clientes);
-	// 	cadastro(principal);
-
-	// 	 fflush(stdin);
-	// 	__fpurge(stdin);
-
-	// 	scanf("%d",&looper);
-	// 	fflush(stdin);
-	// 	__fpurge(stdin);
-	// }
 
 	listar_cidades(principal);
 
 	listar_cidades_e_clientes(principal);
 
-
 	listar_clientes(principal -> next);
-	// printf("%s",tags);
-	// struct cidade *primary = principal -> next;
-	// limpar_cidades(principal); 
+
 	return 0 ;
 }

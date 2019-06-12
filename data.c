@@ -1,10 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
-#endif
 
 struct data data_base(){
 	struct data data_padrao;
