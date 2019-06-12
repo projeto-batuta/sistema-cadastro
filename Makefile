@@ -2,8 +2,8 @@ CC = gcc
 
 LINKERFLAG = -Wall
 
-sistema_cadastro: main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
-	$(CC) -o sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
+sistema_cadastro: main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o session.o
+	$(CC) -o sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o session.o
 
 debug_cadastro:  main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o
 	$(CC) -g sistema_cadastro main.o cidade.o clientefs.o data.o passeio.o roteiro.o tags.o defs.o

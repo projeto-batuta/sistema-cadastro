@@ -65,5 +65,12 @@ struct cidade {
 	struct cidade *next;
 };
 
+struct session{
+	struct cidade *root_cidade;
+	struct roteiro *root_roteiro;
+	struct tag *tag_root;
+};
+
+
 char *recebe_string();
 void listar_cidades_e_clientes(struct cidade *base);

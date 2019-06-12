@@ -10,6 +10,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 #endif
 
 struct roteiro *criar_roteiro(char *nome)
@@ -64,6 +65,11 @@ char *get_roteiro_info(struct roteiro *roteiro_atual)
 struct data get_roteiro_duracao(struct roteiro *roteiro_atual) 
 {
 	return roteiro_atual -> duracao;
+}
+
+struct passeio *get_roteiro_passeios(struct roteiro *roteiro_base)
+{
+	return roteiro_base -> passeios;
 }
 
 void inserir_roteiro(struct roteiro *roteiro_base, struct roteiro *roteiro_novo)

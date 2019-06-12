@@ -10,6 +10,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 #endif
 
 char *recebe_string()
@@ -30,6 +31,7 @@ char *recebe_string()
 	}
 	return nome;
 }
+
 
 void listar_cidades_e_clientes(struct cidade *base)
 {

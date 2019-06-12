@@ -10,6 +10,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 #endif
 
 struct cliente *criar_cliente(char *nome)
@@ -34,6 +35,14 @@ struct cliente *criar_cliente(char *nome)
 		novo_cliente -> tags[i] = 0;
 	}
 	return novo_cliente;
+}
+
+void deletar_cliente(struct cliente *cliente_atual)
+{
+        struct cliente *next = cliente_atual -> prev;
+        struct cliente *prev = cliente_atual -> next;
+        free(cliente_atual ->nome);
+        free(cliente_atual);
 }
 
 void set_cliente_next(struct cliente *cliente_atual,struct cliente *next)
@@ -140,21 +149,15 @@ struct cliente *buscar_cliente(struct cidade *main,char *cpf)
 	
 }
 
-void limpar_clientes(struct cidade *cidade_base)
+void limpar_clientes(struct cliente *clientes)
 {
-	struct cliente *cliente_temp = cidade_base -> clientes;
-	struct cliente *cliente_next;
-	if(cliente_temp!= NULL)
-	{
-		cliente_next = cliente_temp -> next;
-		while(cliente_temp != NULL)
-		{
-			if(cliente_temp -> prev == NULL)
-                                cidade_base->clientes = NULL;
-			free(cliente_temp);
-			cliente_temp = cliente_next;
-		}
-	}
+	struct cliente *cliente_temp = clientes;
+        struct cliente *next;
+        if(cliente_temp != NULL){
+                next = cliente_temp;
+                free(cliente_temp);
+                limpar_clientes(next);
+        }
 }
 
 void carrega_cli_cid(struct cidade *root)
