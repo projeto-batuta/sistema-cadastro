@@ -34,17 +34,20 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 	inserir_cidade(root,cidade_jab);
 	inserir_cidade(root,cidade_gravata_beach);
 
-
 	struct cliente *cliente_olavo = criar_cliente("Olavo");
 	set_cliente_cpf(cliente_olavo,"1515");
 	set_cliente_data_n(cliente_olavo,1880,6,12);
 	struct cliente *cliente_carlos = criar_cliente("Carlos");
+        set_cliente_cpf(cliente_carlos, "30102");
 	set_cliente_data_n(cliente_carlos,1920,2,15);
 	struct cliente *cliente_jorgete = criar_cliente("Jorgete");
+        set_cliente_cpf(cliente_jorgete, "9876231");
 	set_cliente_data_n(cliente_jorgete,1970,4,12);
 	struct cliente *cliente_maicon = criar_cliente("Maicon");
+        set_cliente_cpf(cliente_maicon, "289391");
 	set_cliente_data_n(cliente_maicon,1999,7,30);
 	struct cliente *cliente_waldisney = criar_cliente("Waldisney");
+        set_cliente_cpf(cliente_waldisney, "771231");
 	set_cliente_data_n(cliente_waldisney,1906,6,6);
 
 	carrega_tags(tag_root);
@@ -54,8 +57,6 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 	insere_tag_cliente(cliente_maicon,tag_root,2);
         insere_tag_cliente(cliente_jorgete,tag_root,1);
 	listar_tags_cliente(cliente_maicon,tag_root);
-        struct tag *tag_atual = tag_root->next;
-	printf("%d\n", tag_atual->chamadas);
 	inserir_cliente(cidade_olinda,cliente_carlos);
 	inserir_cliente(cidade_jab,cliente_olavo);
 	inserir_cliente(cidade_recife,cliente_jorgete);
@@ -138,6 +139,8 @@ int main(void)
 
 	demo(principal,tag_root,principal_roteiro);
 
+        registra_cli_cid(principal);
+        // carrega_cli_cid(principal);
 	// interface(principal,principat_tag);
 
 	// list_cli_faixa_idade(principal -> next -> next,0,50,2019);

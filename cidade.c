@@ -72,12 +72,12 @@ void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova)
 
 void listar_cidades(struct cidade *cidades)
 {	
-	struct cidade *tmp = cidades -> next;
+        cidades = cidades->next;
 	printf("\nCidades cadastradas:\n");
-	while(tmp != NULL)
+	while(cidades != NULL)
 	{
-		printf("- %s\n",get_cidade_nome(tmp));
-		tmp = tmp -> next;
+		printf("- %s\n",cidades->nome);
+		cidades = cidades -> next;
 	}
 }
 

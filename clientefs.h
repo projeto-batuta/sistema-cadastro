@@ -13,5 +13,5 @@ void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo);
 void listar_clientes(struct cidade *cidade_atual);
 struct cliente *buscar_cliente(struct cidade *main,char *cpf);
 void limpar_clientes(struct cidade *cidade_base);
-struct cidade *carrega_cli_cid(struct cidade *root);
+void carrega_cli_cid(struct cidade *root);
 void registra_cli_cid(struct cidade *root);
