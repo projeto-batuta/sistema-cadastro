@@ -94,11 +94,11 @@ void interface(struct cidade *cidade_root,struct tag *tag_root)
 {
 	char *contextos [4] = {"Cidades","Clientes","Roteiros","Passeios"};
 	printf("Bem vindo ao FREVO - Edição Terminal                        ");
-	int choice;
+	int escolha;
 	printf("\nEscolha o contexto desejado:\n\n");
 	imprimir_opcoes(-1);
-	scanf("%d",&choice);
-	imprimir_opcoes(choice-1);
+	scanf("%d",&escolha);
+	imprimir_opcoes(escolha-1);
 
 }
 
@@ -111,39 +111,13 @@ int main(void)
 
 	listar_cidades_idade_mediana(root ->root_cidade);
 
-	registra_cli_cid(root -> root_cidade);
+	// registra_cli_cid(root -> root_cidade);
         // carrega_cli_cid(principal);
-	// interface(principal,principat_tag);
-
-	// list_cli_faixa_idade(principal -> next -> next,0,50,2019);
-
-	// printf("\n%d",get_cliente_maior_idade_cidade(buscar_cidade_index(principal,2)));
-	// int looper = TRUE;
-	// while (looper == TRUE) {	
-	// 	listar_cidades_e_clientes(principal);
-	// 	printf("\nNumero de clientes:%d", principal -> next-> count_clientes);
-	// 	cadastro(principal);
-
-	// 	 fflush(stdin);
-	// 	__fpurge(stdin);
-
-	// 	scanf("%d",&looper);
-	// 	fflush(stdin);
-	// 	__fpurge(stdin);
-	// }
 
 	listar_cidades(root -> root_cidade);
 
 	listar_cidades_e_clientes(root -> root_cidade);
 
 
-	listar_clientes(root -> root_cidade -> next);
-	limpar_clientes(root -> root_cidade ->clientes);
-	// printf("%s",tags);
-	// struct cidade *primary = principal -> next;
-	// limpar_cidades(root -> root_cidade);
-	// deletar_cliente(buscar_cliente(root -> root_cidade,"1515"));
-	// printf("%s",buscar_cliente(root ->root_cidade,"1515") -> nome);
-	// free(root); 
 	return 0 ;
 }

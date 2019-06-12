@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -10,8 +8,6 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
-#include "session.h"
-#endif
 
 struct cliente *criar_cliente(char *nome)
 {
@@ -202,11 +198,11 @@ void carrega_cli_cid(struct cidade *root)
                         cliente_atual->nome = nome_cliente;
                         cliente_atual->cpf = cpf;
 
-                        if (j == 0){
+                        if (j == 0) {
                                 cidade_atual->clientes = cliente_atual;
                                 aux = cliente_atual;
                         }
-                        else{
+                        else {
                                 aux->next = cliente_atual;
                                 cliente_atual->next = NULL;
                                 aux = aux->next;

@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -11,7 +9,6 @@
 #include "passeio.h"
 #include "tags.h"
 #include "session.h"
-#endif
 
 struct session *criar_session(){
 	struct session *nova_session = (struct session*)
