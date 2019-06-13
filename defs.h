@@ -60,7 +60,6 @@ struct cidade {
 	char *nome;
 	int count_clientes;
 	struct cliente *clientes;
-	struct cliente *last_cliente;
 	int count_cidades;
 	struct cidade *next;
 };

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -61,20 +62,22 @@ struct tag *criar_tag(char *nome)
         return nova_tag;
 }
 
-void insere_tag_cliente(struct cliente *cliente_atual,struct tag *tag_root, int tag_id)
+int insere_tag_cliente(struct cliente *cliente, struct session *session, int tag_id)
 {
-	struct tag *tag_atual = buscar_id_tag(tag_root,tag_id);
-	int *list = cliente_atual -> tags;
-	int inserido = FALSE;
-	if(tag_atual != NULL){
-		for(int i = 0;i < MAX_TAGS_LENGTH;i++){
-			if(list[i] == 0 && inserido == FALSE){
-				list[i] = get_tag_id(tag_atual);
-				inserido = TRUE;
+	struct tag *tag_atual = buscar_id_tag(session->tag_root,tag_id);
+	if(tag_atual != NULL) {
+		for(int i = 0;i < MAX_TAGS_LENGTH;i++) {
+			if (cliente->tags[i] == 0){
+                                cliente->tags[i] = tag_id;
                                 tag_atual->chamadas++;
-			}
+                                return TRUE;
+                        }
+
+                        if (cliente->tags[i] == tag_id)
+                                return FALSE;
 		}
 	}
+        return FALSE;
 }
 
 void listar_tags(struct tag *root)
@@ -195,4 +198,12 @@ void carrega_tags (struct tag *root)
                 printf("error closing file.");
                 exit(-1);
         }
+}
+
+void limpar_tags (struct tag *tag_root)
+{
+        if (tag_root->next != NULL)
+                limpar_tags(tag_root->next);
+        
+        free(tag_root);
 }

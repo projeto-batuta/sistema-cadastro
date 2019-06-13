@@ -18,7 +18,6 @@ struct cidade *criar_cidade(char *nome)
 	nova_cidade -> count_clientes = 0;
 	nova_cidade -> nome = nome;
 	nova_cidade -> clientes = NULL;
-	nova_cidade -> last_cliente = NULL;
 	nova_cidade -> next = NULL;
 	return nova_cidade;
 }
@@ -27,13 +26,6 @@ struct cidade *criar_cidade(char *nome)
 void set_cidade_nome(struct cidade *cidade_atual,char *nome)
 {
 	cidade_atual -> nome = nome;
-}
-
-
-void set_cidade_last_cliente(struct cidade *cidade_atual,
-	struct cliente *last)
-{
-	cidade_atual -> last_cliente = last;
 }
 
 void set_cidade_next(struct cidade *cidade_atual,struct cidade *cidade_add)
@@ -83,7 +75,7 @@ void listar_cidades_cadastro(struct cidade *cidades)
 {	
 	struct cidade *tmp = cidades -> next;
 	printf("\nCidades cadastradas:\n");
-        printf("[0] - Nova cidade");
+        printf("[0] - Nova cidade\n");
 	int cont = 1;
 	while(tmp != NULL)
 	{
@@ -112,14 +104,15 @@ struct cidade *buscar_cidade_index(struct cidade *root,int index)
 
 void limpar_cidades(struct cidade *cidades)
 {
-	struct cidade *cidade_temp = cidades;
-	struct cidade *next;
-	if(cidade_temp != NULL){
-		next = cidade_temp;
-		free(cidade_temp);
-		// limpar_clientes(cidade_temp ->clientes);
-		limpar_cidades(next);
+
+        if(cidades->clientes != NULL) {
+                limpar_clientes(cidades->clientes);
+        }
+	if(cidades->next != NULL){
+		limpar_cidades(cidades->next);
 	}
+        free(cidades->nome);
+        free(cidades);
 }
 
 int get_cidade_max_idade(struct cidade *base)
