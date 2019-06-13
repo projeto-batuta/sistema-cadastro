@@ -128,8 +128,6 @@ void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *clien
 	}
 }
 
-
-
 void listar_passeios(struct roteiro *roteiro_base)
 {
 	printf("\nPasseios cadastrados com roteiro: %s\n",

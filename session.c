@@ -10,6 +10,8 @@
 #include "tags.h"
 #include "session.h"
 #include <stdio_ext.h>
+#include <time.h>
+
 
 struct session *criar_session()
 {
@@ -18,6 +20,7 @@ struct session *criar_session()
 	nova_session -> root_cidade = criar_cidade("ROOT");
 	nova_session -> root_roteiro = criar_roteiro("ROOT");
 	nova_session -> tag_root = criar_tag("ROOT");
+	set_data_atual(nova_session);
 	return nova_session;
 }
 
@@ -100,4 +103,14 @@ void cadastro_cidade(struct cidade *root)
 	nome = recebe_string();
 	struct cidade *nova_cidade = criar_cidade(nome);
 	inserir_cidade(root,nova_cidade);
+}
+
+void set_data_atual(struct session *sessao_atual)
+{
+	time_t acttime;
+        acttime = time(NULL);
+        struct tm timer = *localtime(&acttime);
+        sessao_atual -> data_atual.dia = timer.tm_mday;
+        sessao_atual -> data_atual.mes = timer.tm_mon + 1;
+        sessao_atual -> data_atual.ano = timer.tm_year + 1900;
 }

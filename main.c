@@ -10,6 +10,7 @@
 #include "passeio.h"
 #include "tags.h"
 #include "session.h"
+#include <time.h>
 
 /*Cadastro*/
 
@@ -70,6 +71,9 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 
 	listar_roteiros(roteiro_root);
 	listar_passeios(novo_recolinda);
+
+        get_cidades_idade_media(root);
+        listar_cidades_idade_media(root);
 
 }
 
@@ -132,6 +136,7 @@ int interface(struct session *sessao)
                 break;                
         
         case 3:
+                listar_cidades_idade_media(sessao ->root_cidade);
                 imprimir_opcoes(escolha);
                 break;
         case 4:
@@ -147,9 +152,14 @@ int interface(struct session *sessao)
 int main(void)
 {
 	struct session *root = criar_session();
-        carrega_tags(root->tag_root);
-        carrega_cli_cid(root->root_cidade);
-        
+        printf("Data atual: %d/%d/%d\n",root -> data_atual.dia,
+                root -> data_atual.mes, root -> data_atual.ano);
+
+        // carrega_tags(root->tag_root);
+        // carrega_cli_cid(root->root_cidade);
+
+        demo(root -> root_cidade,root ->tag_root,root -> root_roteiro);
+
         while (TRUE) {
                 int teste_saida;
                 teste_saida = interface(root);

@@ -126,3 +126,4 @@ struct roteiro *buscar_roteiro_id(struct roteiro *roteiro_base,int id)
 	}
 	return result;
 }
+
