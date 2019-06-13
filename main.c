@@ -73,18 +73,18 @@ void demo(struct cidade *root,struct tag *tag_root,struct roteiro *roteiro_root)
 	listar_passeios(novo_recolinda);
 
         get_cidades_idade_media(root);
-        listar_cidades_idade_media(root);
+        // listar_cidades_idade_media(root);
 
 }
 
 void imprimir_opcoes(int opcao)
 {
         printf("\n");
-	char *listagens[3] = {"1 - Cidades e clientes", "2 - Cidades", "3 - Tags"};
+	char *listagens[4] = {"1 - Cidades e clientes", "2 - Cidades", "3 - Tags","4 - Roteiros"};
         char *estats[2] = {"1 - Idade", "2 - Tags"};
         switch(opcao){
         case 2:
-                for (int i = 0; i < 3; i++){
+                for (int i = 0; i < 4; i++){
                         printf("%s\n",listagens[i]);
                 }
                 break;
@@ -103,9 +103,10 @@ int interface(struct session *sessao)
 {
 	printf("Bem vindo ao FREVO - Edição Terminal\n");
 	printf("1 - Cadastrar novo cliente\n");
-        printf("2 - Listagens\n");
-        printf("3 - Estatísticas\n");
-        printf("4 - Sair\n");
+        printf("2 - Cadastrar novo roteiro\n");
+        printf("3 - Listagens\n");
+        printf("4 - Estatísticas\n");
+        printf("5 - Sair\n");
 
         int escolha;
         scanf("%d", &escolha);
@@ -114,9 +115,11 @@ int interface(struct session *sessao)
                 cadastro(sessao->root_cidade);
                 __fpurge(stdin);
                 break;
-        
         case 2:
-                imprimir_opcoes(escolha);
+                cadastro_roteiro(sessao -> root_roteiro);
+                __fpurge(stdin);
+        case 3:
+                imprimir_opcoes(2);
                 int listagem;
                 scanf("%d", &listagem);
                 switch(listagem){
@@ -129,17 +132,20 @@ int interface(struct session *sessao)
                 case 3:
                         listar_tags(sessao->tag_root);
                         break;
+                case 4:
+                        listar_roteiros(sessao->root_roteiro);
+                        break;
                 default:
                         printf("Opcao invalida\n");
                         break;
                 }
                 break;                
         
-        case 3:
-                listar_cidades_idade_media(sessao ->root_cidade);
-                imprimir_opcoes(escolha);
-                break;
         case 4:
+                listar_cidades_idade_media(sessao);
+                // imprimir_opcoes(escolha);
+                break;
+        case 5:
                 return TRUE;
         
         default:
@@ -155,10 +161,12 @@ int main(void)
         printf("Data atual: %d/%d/%d\n",root -> data_atual.dia,
                 root -> data_atual.mes, root -> data_atual.ano);
 
-        // carrega_tags(root->tag_root);
-        // carrega_cli_cid(root->root_cidade);
+        carrega_tags(root->tag_root);
+        carrega_cli_cid(root->root_cidade);
 
-        demo(root -> root_cidade,root ->tag_root,root -> root_roteiro);
+        // demo(root -> root_cidade,root ->tag_root,root -> root_roteiro);
+        // cadastro_roteiro(root -> root_roteiro);
+        // listar_roteiros(root -> root_roteiro);
 
         while (TRUE) {
                 int teste_saida;

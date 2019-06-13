@@ -114,3 +114,20 @@ void set_data_atual(struct session *sessao_atual)
         sessao_atual -> data_atual.mes = timer.tm_mon + 1;
         sessao_atual -> data_atual.ano = timer.tm_year + 1900;
 }
+
+void cadastro_roteiro(struct roteiro *root)
+{
+	char *nome;
+	struct data datas = data_base();
+	printf("Digite o nome do roteiro:\n");
+	nome = recebe_string();
+	printf("Digite as horas de duracao:\n");
+	scanf("%d",&datas.hora);
+	__fpurge(stdin);
+	printf("Digite os minutos de duracao:\n");
+	scanf("%d",&datas.min);
+	__fpurge(stdin);
+	struct roteiro *novo_roteiro = criar_roteiro(nome);
+	set_roteiro_duracao(novo_roteiro,0,datas.hora,datas.min);
+	inserir_roteiro(root,novo_roteiro);
+}

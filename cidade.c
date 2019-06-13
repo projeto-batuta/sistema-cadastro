@@ -174,24 +174,24 @@ int get_cidades_min_idade(struct cidade *principal)
 	return menor;
 }
 
-void listar_cidades_idade_media(struct cidade *principal)
+void listar_cidades_idade_media(struct session *root)
 {
+	struct cidade *principal = root -> root_cidade;
 	if(principal != NULL){
 		printf("\nCidades e suas idades(médias)\n");
 		struct cidade *tmp = principal;
-		int maior = get_cidades_max_idade(principal);
-		int menor = get_cidades_min_idade(principal);
+		int ano_atual = root ->data_atual.ano;
+		int maior = ano_atual - get_cidades_max_idade(principal);
+		int menor = ano_atual - get_cidades_min_idade(principal);
 		tmp = tmp -> next;
 		while (tmp != NULL)
 		{
-			int menor_tmp = get_cidade_min_idade(tmp);
-			int maior_tmp = get_cidade_max_idade(tmp);
-			int media = get_cidade_idade_media(tmp);
+			int media = ano_atual - get_cidade_idade_media(tmp);
 			printf("\n[%s]\n",get_cidade_nome(tmp));
-			plotar_graf(maior,menor,media,2);
+			plotar_graf(menor,maior,media,60);
 			tmp = tmp -> next;
 			}
-		printf("\n\n[%d]-------------------------------------[%d]\n",maior,menor);
+		printf("\n\nIdade Max : [%d]\tIadade Min[%d]\n",menor,maior);
 	}
 	else{
 		printf("\nNenhuma cidade cadastrada\n");
