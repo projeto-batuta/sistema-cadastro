@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#ifndef DEFS
-#define DEFS
 #include "defs.h"
 #include "data.h"
 #include "clientefs.h"
@@ -10,7 +8,6 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
-#endif
 
 struct roteiro *criar_roteiro(char *nome)
 {
@@ -46,6 +43,11 @@ void set_roteiro_last_passeio(struct roteiro *roteiro_atual, struct passeio *las
 	roteiro_atual -> last_passeio = last;
 }
 
+int get_roteiro_count(struct roteiro *roteiro_base)
+{
+	return roteiro_base -> count_passeios;
+}
+
 char *get_roteiro_nome(struct roteiro *roteiro_atual)
 {
 	return roteiro_atual -> nome; 
@@ -61,32 +63,66 @@ struct data get_roteiro_duracao(struct roteiro *roteiro_atual)
 	return roteiro_atual -> duracao;
 }
 
-void inserir_roteiro(struct cidade *cidade_base, struct roteiro *roteiro_novo)
+struct passeio *get_roteiro_passeios(struct roteiro *roteiro_base)
 {
-	struct roteiro *aux = cidade_base -> roteiros;
-	if(aux != NULL){
-		while (aux -> next != NULL) aux = aux -> next;
-		aux -> next = roteiro_novo;
-	}
-	else {
-		cidade_base -> roteiros = roteiro_novo;
-	}
-	cidade_base -> count_roteiros++;
+	return roteiro_base -> passeios;
 }
 
-void limpar_roteiros(struct cidade *cidade_base)
+void inserir_roteiro(struct roteiro *roteiro_base, struct roteiro *roteiro_novo)
 {
-	struct roteiro *roteiro_temp = cidade_base -> roteiros;
-	struct roteiro *roteiro_next;
-	if(roteiro_temp != NULL)
-	{
-		roteiro_next = roteiro_temp -> next;
-		while (roteiro_temp != NULL)
-		{
-			if(roteiro_temp == cidade_base -> roteiros) cidade_base -> roteiros = NULL;
-			limpar_passeios(roteiro_temp);
-			free(roteiro_temp);
-			roteiro_temp = roteiro_next;
+	struct roteiro *aux = roteiro_base;
+	while(aux -> next != NULL){
+		aux = aux -> next;
+	}
+	aux -> next = roteiro_novo;
+	roteiro_base -> count_passeios++;
+}
+
+void limpar_roteiros(struct roteiro *roteiro_base)
+{
+	if(roteiro_base != NULL){
+		struct roteiro *aux = roteiro_base;
+		if(roteiro_base -> next != NULL){
+			aux -> duracao;
+			struct roteiro *next = aux -> next;
+			limpar_roteiros(next);
+		}
+		free(aux);
+	}
+}
+
+void listar_roteiros(struct roteiro *roteiro_base)
+{
+	printf("\nRoteiros cadastrados:\n");
+	int count = 0;
+	if(roteiro_base != NULL){
+		struct roteiro *aux = roteiro_base;
+		while(aux != NULL){
+			if(count > 0)
+			{
+			printf("[%d] - %s Tempo: [%d:%d]\n       %s\n",count,aux -> nome,
+			 aux -> duracao.hora, aux -> duracao.min,aux ->info);
+			}
+			aux = aux -> next;
+			count++;
 		}
 	}
+}
+
+struct roteiro *buscar_roteiro_id(struct roteiro *roteiro_base,int id)
+{
+	struct roteiro *result = NULL;
+	if(roteiro_base -> count_passeios >= id)
+	{
+		int count = 0;
+		struct roteiro *aux = roteiro_base;
+		while(aux != NULL)
+		{
+			if(count == id)
+				result = aux;
+			aux = aux -> next;
+			count++;
+		}
+	}
+	return result;
 }
