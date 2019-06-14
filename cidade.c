@@ -111,7 +111,9 @@ void limpar_cidades(struct cidade *cidades)
 	if(cidades->next != NULL){
 		limpar_cidades(cidades->next);
 	}
-        free(cidades->nome);
+        if (cidades->nome)
+                free(cidades->nome);
+                
         free(cidades);
 }
 

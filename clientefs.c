@@ -152,8 +152,13 @@ void limpar_clientes(struct cliente *clientes)
         if(clientes->next != NULL){
                 limpar_clientes(clientes->next);
         }
-        // free(clientes->cpf);
-        // free(clientes->nome);
+
+        if(clientes->cpf != NULL)
+                free(clientes->cpf);
+
+        if(clientes->nome != NULL)
+                free(clientes->nome);
+        
         free(clientes);
 }
 
@@ -168,6 +173,8 @@ void carrega_cli_cid(struct cidade *root)
         }
 
         fread(root, sizeof(struct cidade), 1, reg_clientes);
+        root->nome = malloc(NAME_LENGTH*sizeof(char));
+        strcpy(root->nome,"ROOT");
         qtd_cidades = root->count_cidades;
         
         for (int i = 0; i < qtd_cidades; i++) {
@@ -175,15 +182,16 @@ void carrega_cli_cid(struct cidade *root)
 
                 char *nome_cidade = malloc(NAME_LENGTH*sizeof(char));
 
+                // cidade_atual->nome = malloc(NAME_LENGTH*sizeof(char));
+
                 // le do arquivo a struct cidade e o nome da cidade, em seguida
                 // faz as atribuiçoes do nome e dos ponteiros.
                 fread(cidade_atual, sizeof(struct cidade), 1, reg_clientes);
                 fread(nome_cidade, sizeof(char), NAME_LENGTH, reg_clientes);
-
                 cidade_atual->nome = malloc(NAME_LENGTH*sizeof(char));
                 strcpy(cidade_atual->nome, nome_cidade);
                 free(nome_cidade);
-                
+
                 root->next = cidade_atual;
                 cidade_atual->next = NULL;
                 root = root->next;
@@ -196,8 +204,11 @@ void carrega_cli_cid(struct cidade *root)
                         struct cliente *aux;
 
                         
-                        char *cpf = malloc(CPF_LENGTH*(sizeof(char)));
                         char *nome_cliente = malloc(NAME_LENGTH*(sizeof(char)));
+                        char *cpf = malloc(CPF_LENGTH*(sizeof(char)));
+
+                        // cliente_atual->nome = malloc(NAME_LENGTH*sizeof(char));
+                        // cliente_atual->cpf = malloc(CPF_LENGTH*sizeof(char));
 
                         fread(cliente_atual, sizeof(struct cliente), 1, reg_clientes);
                         fread(nome_cliente, sizeof(char), NAME_LENGTH, reg_clientes);
@@ -271,5 +282,7 @@ void registra_cli_cid(struct cidade *root)
                 printf("error closing file.");
                 exit(-1);
         }
+        // free(cliente_atual->nome);
+        // free(cliente_atual->cpf);
         free(cliente_atual);
 }

@@ -20,7 +20,7 @@ int main(void)
         while (TRUE) {
                 int teste_saida;
                 teste_saida = interface(root);
-                if (teste_saida){
+                if (teste_saida) {
                         registra_cli_cid(root->root_cidade);
                         escreve_tags(root->tag_root);
                         break;
