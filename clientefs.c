@@ -183,8 +183,8 @@ void carrega_cli_cid(struct cidade *root)
                 char *nome_cidade = malloc(NAME_LENGTH*sizeof(char));
 
 
-                // le do arquivo a struct cidade e o nome da cidade, em seguida
-                // faz as atribuiçoes do nome e dos ponteiros.
+                /* le do arquivo a struct cidade e o nome da cidade, em seguida
+                faz as atribuiçoes do nome e dos ponteiros.*/
                 fread(cidade_atual, sizeof(struct cidade), 1, reg_clientes);
                 fread(nome_cidade, sizeof(char), NAME_LENGTH, reg_clientes);
                 cidade_atual->nome = malloc(NAME_LENGTH*sizeof(char));
@@ -236,6 +236,7 @@ void carrega_cli_cid(struct cidade *root)
                 exit(-1);
         }
 }
+
 
 void registra_cli_cid(struct cidade *root)
 {

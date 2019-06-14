@@ -68,6 +68,7 @@ struct session{
 	struct cidade *root_cidade;
 	struct roteiro *root_roteiro;
 	struct tag *tag_root;
+	struct data data_atual;
 };
 
 

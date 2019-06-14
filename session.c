@@ -10,6 +10,7 @@
 #include "tags.h"
 #include "session.h"
 #include <stdio_ext.h>
+#include <time.h>
 
 struct session *criar_session()
 {
@@ -18,6 +19,7 @@ struct session *criar_session()
 	nova_session->root_cidade = criar_cidade("ROOT");
 	nova_session->root_roteiro = criar_roteiro("ROOT");
 	nova_session->tag_root = criar_tag("ROOT");
+        set_data_atual(nova_session);
 	return nova_session;
 }
 
@@ -117,14 +119,26 @@ void cadastro_cidade(struct cidade *root)
 	inserir_cidade(root,nova_cidade);
 }
 
+
+
+void set_data_atual(struct session *sessao_atual)
+{
+	time_t acttime;
+        acttime = time(NULL);
+        struct tm timer = *localtime(&acttime);
+        sessao_atual -> data_atual.dia = timer.tm_mday;
+        sessao_atual -> data_atual.mes = timer.tm_mon + 1;
+        sessao_atual -> data_atual.ano = timer.tm_year + 1900;
+}
+
 void imprimir_opcoes(int opcao)
 {
         printf("\n");
-	char *listagens[3] = {"1 - Cidades e clientes", "2 - Cidades", "3 - Tags"};
+	char *listagens[4] = {"1 - Cidades e clientes", "2 - Cidades", "3 - Tags","4 - Roteiros"};
         char *estats[2] = {"1 - Idade", "2 - Tags"};
         switch(opcao){
         case 2:
-                for (int i = 0; i < 3; i++){
+                for (int i = 0; i < 4; i++){
                         printf("%s\n",listagens[i]);
                 }
                 break;
@@ -143,9 +157,10 @@ int interface(struct session *sessao)
 {
 	printf("Bem vindo ao FREVO - Edição Terminal\n");
 	printf("1 - Cadastrar novo cliente\n");
-        printf("2 - Listagens\n");
-        printf("3 - Estatísticas\n");
-        printf("4 - Sair\n");
+        printf("2 - Cadastrar novo roteiro\n");
+        printf("3 - Listagens\n");
+        printf("4 - Estatísticas\n");
+        printf("5 - Sair\n");
 
         int escolha;
         scanf("%d", &escolha);
@@ -154,9 +169,11 @@ int interface(struct session *sessao)
                 cadastro(sessao);
                 __fpurge(stdin);
                 break;
-        
         case 2:
-                imprimir_opcoes(escolha);
+                cadastro_roteiro(sessao -> root_roteiro);
+                __fpurge(stdin);
+        case 3:
+                imprimir_opcoes(2);
                 int listagem;
                 scanf("%d", &listagem);
                 switch(listagem){
@@ -169,16 +186,20 @@ int interface(struct session *sessao)
                 case 3:
                         listar_tags(sessao->tag_root);
                         break;
+                case 4:
+                        listar_roteiros(sessao->root_roteiro);
+                        break;
                 default:
                         printf("Opcao invalida\n");
                         break;
                 }
                 break;                
         
-        case 3:
-                imprimir_opcoes(escolha);
-                break;
         case 4:
+                listar_cidades_idade_media(sessao);
+                // imprimir_opcoes(escolha);
+                break;
+        case 5:
                 return TRUE;
         
         default:
@@ -186,6 +207,23 @@ int interface(struct session *sessao)
                 break;
         }
         return FALSE;
+}
+
+void cadastro_roteiro(struct roteiro *root)
+{
+	char *nome;
+	struct data datas = data_base();
+	printf("Digite o nome do roteiro:\n");
+	nome = recebe_string();
+	printf("Digite as horas de duracao:\n");
+	scanf("%d",&datas.hora);
+	__fpurge(stdin);
+	printf("Digite os minutos de duracao:\n");
+	scanf("%d",&datas.min);
+	__fpurge(stdin);
+	struct roteiro *novo_roteiro = criar_roteiro(nome);
+	set_roteiro_duracao(novo_roteiro,0,datas.hora,datas.min);
+	inserir_roteiro(root,novo_roteiro);
 }
 
 void limpar_session(struct session *session)

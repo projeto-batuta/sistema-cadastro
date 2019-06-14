@@ -100,7 +100,7 @@ void listar_roteiros(struct roteiro *roteiro_base)
 		while(aux != NULL){
 			if(count > 0)
 			{
-			printf("[%d] - %s Tempo: [%d:%d]\n       %s\n",count,aux -> nome,
+			printf("[%d] - %s [Tempo: %d:%d]\n       %s\n",count,aux -> nome,
 			 aux -> duracao.hora, aux -> duracao.min,aux ->info);
 			}
 			aux = aux -> next;
