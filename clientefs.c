@@ -182,7 +182,6 @@ void carrega_cli_cid(struct cidade *root)
 
                 char *nome_cidade = malloc(NAME_LENGTH*sizeof(char));
 
-                // cidade_atual->nome = malloc(NAME_LENGTH*sizeof(char));
 
                 // le do arquivo a struct cidade e o nome da cidade, em seguida
                 // faz as atribuiçoes do nome e dos ponteiros.
@@ -206,9 +205,6 @@ void carrega_cli_cid(struct cidade *root)
                         
                         char *nome_cliente = malloc(NAME_LENGTH*(sizeof(char)));
                         char *cpf = malloc(CPF_LENGTH*(sizeof(char)));
-
-                        // cliente_atual->nome = malloc(NAME_LENGTH*sizeof(char));
-                        // cliente_atual->cpf = malloc(CPF_LENGTH*sizeof(char));
 
                         fread(cliente_atual, sizeof(struct cliente), 1, reg_clientes);
                         fread(nome_cliente, sizeof(char), NAME_LENGTH, reg_clientes);
@@ -282,7 +278,6 @@ void registra_cli_cid(struct cidade *root)
                 printf("error closing file.");
                 exit(-1);
         }
-        // free(cliente_atual->nome);
-        // free(cliente_atual->cpf);
+
         free(cliente_atual);
 }
