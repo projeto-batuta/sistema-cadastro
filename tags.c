@@ -9,6 +9,7 @@
 #include "roteiro.h"
 #include "passeio.h"
 #include "tags.h"
+#include "session.h"
 
 void set_tag_nome(struct tag *tag_atual,char *nome)
 {
@@ -206,4 +207,46 @@ void limpar_tags (struct tag *tag_root)
                 limpar_tags(tag_root->next);
         
         free(tag_root);
+}
+
+
+void stats_tag_geral (struct tag *tag_root)
+{
+        printf("----------------------------------------\n");
+        printf("\n\n## Recorrência geral de Tags\n\n");
+        tag_root = tag_root->next;
+
+        int maior_ocorrencia = get_max_tagarray(tag_root);
+        int menor_ocorrencia = get_min_tagarray(tag_root);
+
+        while (tag_root != NULL) {
+                plotar_graf(menor_ocorrencia, maior_ocorrencia,tag_root->chamadas,60);
+                printf(" %s\n", tag_root->nome);
+
+                tag_root = tag_root->next;
+        }
+}
+
+int get_max_tagarray (struct tag *tag_root)
+{
+        int max = tag_root->chamadas;
+
+        while (tag_root != NULL) {
+                if (tag_root->chamadas > max)
+                        max = tag_root->chamadas;
+                tag_root = tag_root->next;
+        }
+        return max;
+}
+
+int get_min_tagarray (struct tag *tag_root)
+{
+        int min = tag_root->chamadas;
+
+        while (tag_root != NULL) {
+                if (tag_root->chamadas < min)
+                        min = tag_root->chamadas;
+                tag_root = tag_root->next;
+        }
+        return min;
 }

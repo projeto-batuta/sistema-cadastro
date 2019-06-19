@@ -197,7 +197,8 @@ int interface(struct session *sessao)
         
         case 4:
                 listar_cidades_idade_media(sessao);
-                // imprimir_opcoes(escolha);
+                stats_tag_geral(sessao->tag_root);
+                printf("\n\n");
                 break;
         case 5:
                 return TRUE;

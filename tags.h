@@ -14,3 +14,8 @@ void escreve_tags(struct tag *root);
 void carrega_tags (struct tag *root);
 struct tag *constroi_tags (struct tag *root);
 void limpar_tags (struct tag *tag_root);
+void stats_tag_geral (struct tag *tag_root);
+int *qtd_tags (struct tag *tag_root, int *array_qtd);
+int get_max_tagarray (struct tag *tag_root);
+int get_min_tagarray (struct tag *tag_root);
+
