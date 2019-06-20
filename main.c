@@ -16,7 +16,9 @@ int main(void)
 	struct session *root = criar_session();
         carrega_tags(root->tag_root);
         carrega_cli_cid(root->root_cidade);
-        printf("\n[%d/%d/%d]\n",root ->data_atual.dia,root -> data_atual.mes, root -> data_atual.ano );
+
+        printf("\n[%d/%d/",root ->data_atual.dia,root->data_atual.mes);
+        printf("%d]\n", root->data_atual.ano);
         while (TRUE) {
                 int teste_saida;
                 teste_saida = interface(root);

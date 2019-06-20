@@ -51,8 +51,9 @@ int get_cidade_count(struct cidade *root)
 void inserir_cidade(struct cidade *cidade_base,struct cidade *cidade_nova)
 {
 	struct cidade *pont_temp = cidade_base;
-	if (pont_temp -> next == NULL) pont_temp -> next = cidade_nova;
-	else {
+	if (pont_temp -> next == NULL){
+                pont_temp -> next = cidade_nova;
+        } else {
 		while (pont_temp -> next != NULL) 
 			pont_temp = pont_temp -> next;
 		pont_temp -> next = cidade_nova;
@@ -187,8 +188,7 @@ void listar_cidades_idade_media(struct session *root)
 			tmp = tmp -> next;
 			}
 		printf("\n\nIdade Max : [%d]\tIadade Min[%d]\n",menor,maior);
-	}
-	else{
+	} else {
 		printf("\nNenhuma cidade cadastrada\n");
 	}
 }
@@ -199,7 +199,7 @@ int get_cidade_idade_media(struct cidade *cidade_base)
 	int sum = 0;
 	int count = 0;
 	struct cliente *tmp = cidade_base -> clientes;
-	while(tmp != NULL){
+	while(tmp != NULL) {
 		sum = sum + get_cliente_data_n(tmp).ano;
 		tmp = tmp -> next;
 		count++;

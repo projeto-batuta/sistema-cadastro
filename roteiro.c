@@ -31,14 +31,16 @@ void set_roteiro_info(struct roteiro *roteiro_atual,char *info)
 	roteiro_atual -> info = info;
 }
 
-void set_roteiro_duracao(struct roteiro *roteiro_atual,int dia,int hora,int min)
+void set_roteiro_duracao(struct roteiro *roteiro_atual,int dia,
+        int hora,int min)
 {
 	roteiro_atual -> duracao.dia = dia;
 	roteiro_atual -> duracao.hora = hora;
 	roteiro_atual -> duracao.min = min;
 }
 
-void set_roteiro_last_passeio(struct roteiro *roteiro_atual, struct passeio *last)
+void set_roteiro_last_passeio(struct roteiro *roteiro_atual,
+        struct passeio *last)
 {
 	roteiro_atual -> last_passeio = last;
 }
@@ -68,7 +70,8 @@ struct passeio *get_roteiro_passeios(struct roteiro *roteiro_base)
 	return roteiro_base -> passeios;
 }
 
-void inserir_roteiro(struct roteiro *roteiro_base, struct roteiro *roteiro_novo)
+void inserir_roteiro(struct roteiro *roteiro_base,
+        struct roteiro *roteiro_novo)
 {
 	struct roteiro *aux = roteiro_base;
 	while(aux -> next != NULL){
@@ -100,8 +103,10 @@ void listar_roteiros(struct roteiro *roteiro_base)
 		while(aux != NULL){
 			if(count > 0)
 			{
-			printf("[%d] - %s [Tempo: %d:%d]\n       %s\n",count,aux -> nome,
-			 aux -> duracao.hora, aux -> duracao.min,aux ->info);
+			printf("[%d] - %s [Tempo: %d:%d]\n       %s\n",count,
+                                aux->nome,
+			        aux-> duracao.hora,
+                                aux-> duracao.min,aux ->info);
 			}
 			aux = aux -> next;
 			count++;

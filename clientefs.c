@@ -97,7 +97,6 @@ int *get_cliente_tags(struct cliente *cliente_atual)
 
 void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo)
 {
-	// struct cidade *pont_cidade = cidade_base;
 	struct cliente *pont_cliente = cidade_base -> clientes;
 
 	if (pont_cliente != NULL){
@@ -105,8 +104,7 @@ void inserir_cliente(struct cidade *cidade_base,struct cliente *cliente_novo)
 			pont_cliente = pont_cliente -> next;
 		pont_cliente -> next = cliente_novo;
 		cliente_novo -> prev = pont_cliente;
-	}
-	else {
+	} else {
 		cidade_base -> clientes = cliente_novo;
 		cliente_novo -> prev = NULL;
 	}
@@ -118,9 +116,11 @@ void listar_clientes(struct cidade *cidade_atual)
 {
 	struct cliente *pont_temp = cidade_atual -> clientes;
 	int count=1;
-	printf("\nClientes cadastrados em %s:\n\n",get_cidade_nome(cidade_atual));
-	while(pont_temp != NULL){
-		printf("[%d] - Nome: %s\n      CPF: %s\n\n",count,get_cliente_nome(pont_temp),get_cliente_cpf(pont_temp));
+	printf("\nClientes cadastrados em %s:\n\n",
+                get_cidade_nome(cidade_atual));
+	while(pont_temp != NULL) {
+		printf("[%d] - Nome: %s\n", count,get_cliente_nome(pont_temp));
+                printf("      CPF: %s\n\n",get_cliente_cpf(pont_temp));
 		pont_temp = pont_temp -> next;
 		count++;
 	}
@@ -135,7 +135,7 @@ struct cliente *buscar_cliente(struct cidade *main,char *cpf)
 		pont_temp_cli = pont_temp_cid -> clientes;
 		while(pont_temp_cli != NULL)
 		{
-			if(get_cliente_cpf(pont_temp_cli) == cpf){
+			if(get_cliente_cpf(pont_temp_cli) == cpf) {
 				result = pont_temp_cli;
 			}
 			pont_temp_cli = pont_temp_cli -> next;
@@ -182,12 +182,11 @@ void carrega_cli_cid(struct cidade *root)
 
                 char *nome_cidade = malloc(NAME_LENGTH*sizeof(char));
 
-
-                /* le do arquivo a struct cidade e o nome da cidade, em seguida
-                faz as atribuiçoes do nome e dos ponteiros.*/
                 fread(cidade_atual, sizeof(struct cidade), 1, reg_clientes);
                 fread(nome_cidade, sizeof(char), NAME_LENGTH, reg_clientes);
+
                 cidade_atual->nome = malloc(NAME_LENGTH*sizeof(char));
+                
                 strcpy(cidade_atual->nome, nome_cidade);
                 free(nome_cidade);
 
@@ -203,11 +202,13 @@ void carrega_cli_cid(struct cidade *root)
                         struct cliente *aux;
 
                         
-                        char *nome_cliente = malloc(NAME_LENGTH*(sizeof(char)));
-                        char *cpf = malloc(CPF_LENGTH*(sizeof(char)));
+                        char *nome_cliente = malloc(NAME_LENGTH*sizeof(char));
+                        char *cpf = malloc(CPF_LENGTH*sizeof(char));
 
-                        fread(cliente_atual, sizeof(struct cliente), 1, reg_clientes);
-                        fread(nome_cliente, sizeof(char), NAME_LENGTH, reg_clientes);
+                        fread(cliente_atual, sizeof(struct cliente), 1,
+                                reg_clientes);
+                        fread(nome_cliente, sizeof(char), NAME_LENGTH,
+                                reg_clientes);
                         fread(cpf, sizeof(char), CPF_LENGTH, reg_clientes);
 
                         cliente_atual->nome = malloc(NAME_LENGTH*sizeof(char));
@@ -258,23 +259,27 @@ void registra_cli_cid(struct cidade *root)
 
         while (root != NULL) {
                 fwrite(&*root, sizeof(struct cidade), 1, reg_clientes);
-                fwrite(root->nome,sizeof(char), NAME_LENGTH, reg_clientes);
+                fwrite(root->nome,sizeof(char), NAME_LENGTH,
+                        reg_clientes);
                 cliente_atual = root->clientes;
 
                 while (cliente_atual != NULL) {
-                        fwrite(&*cliente_atual, sizeof(struct cliente), 1, reg_clientes);
+                        fwrite(&*cliente_atual, sizeof(struct cliente), 1,
+                                reg_clientes);
                         if (cliente_atual->nome)
-                                fwrite(cliente_atual->nome,sizeof(char), NAME_LENGTH, reg_clientes);
+                                fwrite(cliente_atual->nome,sizeof(char),
+                                        NAME_LENGTH, reg_clientes);
                         
                         if(cliente_atual->cpf)
-                                fwrite(cliente_atual->cpf, sizeof(char), CPF_LENGTH, reg_clientes);
+                                fwrite(cliente_atual->cpf, sizeof(char),
+                                        CPF_LENGTH, reg_clientes);
                                 
                         cliente_atual = cliente_atual->next;
                 } 
 
                 root = root->next;
         }
-
+        
         if (fclose(reg_clientes)) {
                 printf("error closing file.");
                 exit(-1);

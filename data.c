@@ -3,7 +3,8 @@
 #include "defs.h"
 #include "data.h"
 
-struct data data_base() {
+struct data data_base()
+{
 	struct data data_padrao;
 	data_padrao.ano = 0;
 	data_padrao.dia = 0;

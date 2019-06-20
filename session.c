@@ -33,9 +33,9 @@ void plotar_graf(int min,int max,int valor,int niveis)
 		if(i == valor_adaptado - 1){
 			printf("|%d",valor);
 			break;
-		}
-		else
+		} else {
 			printf("=");
+                }
 	}
 }
 
@@ -67,7 +67,8 @@ int cadastro(struct session *session)
                 choice = session->root_cidade->count_cidades;
         }
 
-	struct cidade *cidade_escolhida = buscar_cidade_index(session->root_cidade,choice);
+	struct cidade *cidade_escolhida = 
+                buscar_cidade_index(session->root_cidade,choice);
 
         if (!cidade_escolhida) {
                 printf("Erro ao buscar cidade\n");
@@ -75,7 +76,7 @@ int cadastro(struct session *session)
         }
 
 
-	if(buscar_cliente(session->root_cidade,cpf)!=NULL)
+	if (buscar_cliente(session->root_cidade,cpf)!=NULL)
 		return FALSE;
 
 	printf("\nDigite o dia de nascimento:\n");
@@ -95,18 +96,20 @@ int cadastro(struct session *session)
 
         while (counter_tag < 5) {
                 scanf("%d", &escolha_tag);
-                teste_tag = insere_tag_cliente(novo_cliente, session, escolha_tag);
+                teste_tag =
+                        insere_tag_cliente(novo_cliente, session, escolha_tag);
                 if(teste_tag)
                         counter_tag++;
                 
         }
 
 	set_cliente_cpf(novo_cliente,cpf);
-	set_cliente_data_n(novo_cliente,data_Nasc.ano,data_Nasc.mes,data_Nasc.dia);
+	set_cliente_data_n(novo_cliente,data_Nasc.ano,
+                data_Nasc.mes,data_Nasc.dia);
 	set_cliente_genero(novo_cliente,genero);
 
 	inserir_cliente(cidade_escolhida,novo_cliente);
-
+        printf("Cadastro realizado com sucesso!\n");
 	return TRUE;
 }
 
@@ -134,16 +137,17 @@ void set_data_atual(struct session *sessao_atual)
 void imprimir_opcoes(int opcao)
 {
         printf("\n");
-	char *listagens[4] = {"1 - Cidades e clientes", "2 - Cidades", "3 - Tags","4 - Roteiros"};
+	char *listagens[4] = {"1 - Cidades e clientes",
+                "2 - Cidades","3 - Tags","4 - Roteiros"};
         char *estats[2] = {"1 - Idade", "2 - Tags"};
         switch(opcao){
         case 2:
-                for (int i = 0; i < 4; i++){
+                for (int i = 0; i < 4; i++) {
                         printf("%s\n",listagens[i]);
                 }
                 break;
         case 3:
-                for (int i = 0; i < 2; i++){
+                for (int i = 0; i < 2; i++) {
                         printf("%s\n", estats[i]);
                 }
                 break;
