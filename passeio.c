@@ -88,8 +88,10 @@ int get_passeio_clientes_count
 	int result = 0;
 	for(int i = 0; i< MAX_CLIENTES;i++)
 	{
-		if(passeio_atual -> clientes[i] != "") result++;
-		else break;
+		if(passeio_atual -> clientes[i] != "")
+                        result++;
+		else
+                        break;
 	}
 	return result;
 }
@@ -99,15 +101,13 @@ void inserir_passeio(struct roteiro *roteiro_base,struct passeio *passeio_novo)
 	struct roteiro *pont_roteiro = roteiro_base;
 	struct passeio *pont_passeio = roteiro_base -> passeios;
 
-	if (pont_passeio != NULL){
+	if (pont_passeio != NULL) {
 		while (pont_passeio -> next != NULL){
 			pont_passeio = pont_passeio -> next;
 		}
 		pont_passeio -> next = passeio_novo;
 		passeio_novo -> prev = pont_passeio;
-	}
-
-	else {
+	} else {
 		pont_roteiro -> passeios = passeio_novo;
 	}
 	pont_roteiro -> last_passeio = passeio_novo;
@@ -116,15 +116,17 @@ void inserir_passeio(struct roteiro *roteiro_base,struct passeio *passeio_novo)
 }
 
 
-void inserir_cliente_passeio(struct passeio *passeio_atual,struct cliente *cliente_atual)
+void inserir_cliente_passeio(struct passeio *passeio_atual,
+        struct cliente *cliente_atual)
 {
 	for(int i = 0;i < MAX_CLIENTES;i++){
 		if(passeio_atual -> clientes[i] == ""){
-			passeio_atual -> clientes[i] = get_cliente_cpf(cliente_atual);
+			passeio_atual -> clientes[i] =
+                                get_cliente_cpf(cliente_atual);
 			break;
-		}
-		else if (i == MAX_TAGS_LENGTH - 1)
+		} else if (i == MAX_TAGS_LENGTH - 1){
 			break;
+                }
 	}
 }
 
@@ -143,12 +145,12 @@ void listar_passeios(struct roteiro *roteiro_base)
 				get_passeio_agenda(passeio_tmp).mes,
 				get_passeio_agenda(passeio_tmp).ano,
 				get_passeio_estado(passeio_tmp));
-				printf("      Numero de clientes cadastrados:%d\n",
-				get_passeio_clientes_count(passeio_tmp));
+                        printf("      ");
+                        printf("Numero de clientes cadastrados:");
+                        printf("%d\n",get_passeio_clientes_count(passeio_tmp));
 			passeio_tmp = passeio_tmp -> next;
 		}
-	}
-	else{
+	} else {
 		printf("Nenhum passeio marcado");
 	}
 }
@@ -162,7 +164,8 @@ void limpar_passeios(struct roteiro *roteiro_base)
 		passeio_next = passeio_temp -> next;
 		while (passeio_temp != NULL)
 		{
-			if(passeio_temp -> prev == NULL) roteiro_base -> passeios = NULL;
+			if (passeio_temp -> prev == NULL)
+                                roteiro_base->passeios = NULL;
 			free(passeio_temp);
 			passeio_temp = passeio_next;
 		}

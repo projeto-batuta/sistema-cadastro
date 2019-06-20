@@ -14,7 +14,7 @@ char *recebe_string()
 {
         __fpurge(stdin);
 	int pos_string= 0, tamanho = 1;
-	char *nome = malloc(tamanho * sizeof(char));
+	char *nome = malloc(tamanho*sizeof(char));
 	char c;
 
 	while(1) {

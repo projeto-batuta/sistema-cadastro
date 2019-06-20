@@ -39,7 +39,7 @@ int get_tag_id(struct tag *tag_atual)
 struct tag *buscar_id_tag(struct tag *root,int id)
 {
 	struct tag *tmp = root;
-	while(tmp != NULL){
+	while(tmp != NULL) {
 		if (get_tag_id(tmp) == id) {
 			return tmp;
 		}
@@ -85,8 +85,7 @@ void listar_tags(struct tag *root)
 {
 	struct tag *pont_temp = root;
 	printf("\nTags cadastradas:\n");
-	while(pont_temp != NULL)
-	{
+	while(pont_temp != NULL) {
 		printf("[%d] - %s\n",get_tag_id(pont_temp),get_tag_nome(pont_temp));
 		pont_temp = pont_temp -> next;
 	}
@@ -97,11 +96,10 @@ void listar_tags_cliente(struct cliente *cliente_atual,struct tag *tag_root)
 	int *list = cliente_atual ->tags;
 	int count = 0;
 	printf("\nTags de %s:\n",get_cliente_nome(cliente_atual));
-	for(int i = 0; i < MAX_TAGS_LENGTH;i++){
-		if(list[i] != 0){
+	for(int i = 0; i < MAX_TAGS_LENGTH;i++) {
+		if(list[i] != 0) {
 			printf("- %s\n",get_tag_nome(buscar_id_tag(tag_root,list[i])));
-		}
-		else{
+		} else {
 			printf("- Espaco disponivel\n");
 		}
 		
@@ -195,7 +193,7 @@ void carrega_tags (struct tag *root)
                 root = root->next;
         }
 
-        if (fclose(fp)){
+        if (fclose(fp)) {
                 printf("error closing file.");
                 exit(-1);
         }
@@ -220,7 +218,8 @@ void stats_tag_geral (struct tag *tag_root)
         int menor_ocorrencia = get_min_tagarray(tag_root);
 
         while (tag_root != NULL) {
-                plotar_graf(menor_ocorrencia, maior_ocorrencia,tag_root->chamadas,60);
+                plotar_graf(menor_ocorrencia, maior_ocorrencia,
+                        tag_root->chamadas,60);
                 printf(" %s\n", tag_root->nome);
 
                 tag_root = tag_root->next;
